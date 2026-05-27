@@ -1,0 +1,7 @@
+{
+  "commands": [
+    "pwd",
+    "echo 'Привет из JSON!'",
+    "ls -la"
+  ]
+}
