@@ -152,6 +152,7 @@ function handleWsJsonMessage(raw: string): boolean {
       files?: string[]
       filename?: string
       content_base64?: string
+      content?: string
       error?: string
       message?: string
     }
@@ -177,12 +178,31 @@ function handleWsJsonMessage(raw: string): boolean {
         cfgMessage.value = payload.error ?? 'Ошибка чтения файла'
         return true
       }
-      const rawBytes = base64ToBytes(payload.content_base64 ?? '')
-      const sniffed = sniffEncoding(rawBytes)
-      selectedEncoding.value = sniffed.encoding
-      keepBom.value = sniffed.hasBom
-      cfgContent.value = decodeBytes(rawBytes, sniffed.encoding)
-      cfgMessage.value = `Файл ${payload.filename ?? ''} загружен`
+      try {
+        // Новый протокол: сервер отдает байты файла в base64.
+        if (typeof payload.content_base64 === 'string' && payload.content_base64.length > 0) {
+          const rawBytes = base64ToBytes(payload.content_base64)
+          const sniffed = sniffEncoding(rawBytes)
+          selectedEncoding.value = sniffed.encoding
+          keepBom.value = sniffed.hasBom
+          cfgContent.value = decodeBytes(rawBytes, sniffed.encoding)
+          cfgMessage.value = `Файл ${payload.filename ?? ''} загружен (${sniffed.encoding})`
+          return true
+        }
+
+        // Backward compatibility: старый сервер отдавал строковое поле content.
+        if (typeof payload.content === 'string') {
+          selectedEncoding.value = 'utf-8'
+          keepBom.value = false
+          cfgContent.value = payload.content
+          cfgMessage.value = `Файл ${payload.filename ?? ''} загружен (legacy mode)`
+          return true
+        }
+
+        cfgMessage.value = 'Сервер вернул пустой ответ для cfg_read'
+      } catch (err) {
+        cfgMessage.value = `Ошибка декодирования файла: ${(err as Error).message}`
+      }
       return true
     }
 

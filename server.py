@@ -124,11 +124,20 @@ async def handle_json_rpc(websocket, payload: dict):
         if action == "cfg_write":
             filename = str(payload.get("filename", "")).strip()
             content_base64 = payload.get("content_base64")
-            if not isinstance(content_base64, str):
-                raise ValueError("content_base64 должен быть строкой.")
-
             path = safe_cfg_path(filename)
-            raw_bytes = base64.b64decode(content_base64.encode("ascii"), validate=True)
+
+            if isinstance(content_base64, str):
+                raw_bytes = base64.b64decode(content_base64.encode("ascii"), validate=True)
+            else:
+                # Backward compatibility: старый frontend отправляет текст в поле content.
+                content = payload.get("content")
+                if not isinstance(content, str):
+                    raise ValueError("Нужно передать content_base64 (строка) или content (строка).")
+                content_encoding = str(payload.get("content_encoding", "utf-8")).lower()
+                if content_encoding not in {"utf-8", "utf-16le", "utf-16be"}:
+                    raise ValueError("content_encoding должен быть utf-8, utf-16le или utf-16be.")
+                raw_bytes = content.encode(content_encoding)
+
             CFG_DIR.mkdir(parents=True, exist_ok=True)
             path.write_bytes(raw_bytes)
 
