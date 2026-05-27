@@ -1,4 +1,5 @@
 import asyncio
+import base64
 import json
 import os
 import subprocess
@@ -106,7 +107,8 @@ async def handle_json_rpc(websocket, payload: dict):
             path = safe_cfg_path(filename)
             if not path.exists():
                 raise FileNotFoundError(f"Файл {filename} не найден.")
-            content = path.read_text(encoding="utf-8")
+            raw_bytes = path.read_bytes()
+            content_base64 = base64.b64encode(raw_bytes).decode("ascii")
             await send_json(
                 websocket,
                 {
@@ -114,23 +116,21 @@ async def handle_json_rpc(websocket, payload: dict):
                     "request_id": request_id,
                     "ok": True,
                     "filename": filename,
-                    "content": content,
+                    "content_base64": content_base64,
                 },
             )
             return
 
         if action == "cfg_write":
             filename = str(payload.get("filename", "")).strip()
-            content = payload.get("content")
-            if not isinstance(content, str):
-                raise ValueError("content должен быть строкой.")
+            content_base64 = payload.get("content_base64")
+            if not isinstance(content_base64, str):
+                raise ValueError("content_base64 должен быть строкой.")
 
             path = safe_cfg_path(filename)
-            # Проверяем, что контент является валидным JSON.
-            parsed = json.loads(content)
-            pretty = json.dumps(parsed, ensure_ascii=False, indent=2) + "\n"
+            raw_bytes = base64.b64decode(content_base64.encode("ascii"), validate=True)
             CFG_DIR.mkdir(parents=True, exist_ok=True)
-            path.write_text(pretty, encoding="utf-8")
+            path.write_bytes(raw_bytes)
 
             await send_json(
                 websocket,

@@ -39,6 +39,15 @@
         </select>
       </div>
 
+      <div class="cfg-picker">
+        <label for="cfg-encoding">Кодировка</label>
+        <select id="cfg-encoding" v-model="selectedEncoding" :disabled="!connected || !selectedCfgFile">
+          <option value="utf-8">utf-8</option>
+          <option value="utf-16le">utf-16le</option>
+          <option value="utf-16be">utf-16be</option>
+        </select>
+      </div>
+
       <p v-if="cfgMessage" class="cfg-message">{{ cfgMessage }}</p>
       <textarea
         v-model="cfgContent"
@@ -73,6 +82,8 @@ const selectedCfgFile = ref('')
 const cfgContent = ref('')
 const cfgLoading = ref(false)
 const cfgMessage = ref('')
+const selectedEncoding = ref<'utf-8' | 'utf-16le' | 'utf-16be'>('utf-8')
+const keepBom = ref(false)
 
 let socket: WebSocket | null = null
 let rpcCounter = 0
@@ -140,7 +151,7 @@ function handleWsJsonMessage(raw: string): boolean {
       ok?: boolean
       files?: string[]
       filename?: string
-      content?: string
+      content_base64?: string
       error?: string
       message?: string
     }
@@ -166,7 +177,11 @@ function handleWsJsonMessage(raw: string): boolean {
         cfgMessage.value = payload.error ?? 'Ошибка чтения файла'
         return true
       }
-      cfgContent.value = payload.content ?? ''
+      const rawBytes = base64ToBytes(payload.content_base64 ?? '')
+      const sniffed = sniffEncoding(rawBytes)
+      selectedEncoding.value = sniffed.encoding
+      keepBom.value = sniffed.hasBom
+      cfgContent.value = decodeBytes(rawBytes, sniffed.encoding)
       cfgMessage.value = `Файл ${payload.filename ?? ''} загружен`
       return true
     }
@@ -218,12 +233,116 @@ function saveSelectedFile() {
   cfgMessage.value = ''
   try {
     JSON.parse(cfgContent.value)
-    sendRpc('cfg_write', { filename: selectedCfgFile.value, content: cfgContent.value })
+    const rawBytes = encodeText(cfgContent.value, selectedEncoding.value, keepBom.value)
+    sendRpc('cfg_write', { filename: selectedCfgFile.value, content_base64: bytesToBase64(rawBytes) })
   } catch (err) {
     cfgMessage.value = `Некорректный JSON: ${(err as Error).message}`
   } finally {
     cfgLoading.value = false
   }
+}
+
+function bytesToBase64(bytes: Uint8Array): string {
+  let binary = ''
+  const chunkSize = 0x8000
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize)
+    binary += String.fromCharCode(...chunk)
+  }
+  return btoa(binary)
+}
+
+function base64ToBytes(base64: string): Uint8Array {
+  const binary = atob(base64)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i += 1) {
+    bytes[i] = binary.charCodeAt(i)
+  }
+  return bytes
+}
+
+function sniffEncoding(bytes: Uint8Array): { encoding: 'utf-8' | 'utf-16le' | 'utf-16be'; hasBom: boolean } {
+  if (bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xfe) {
+    return { encoding: 'utf-16le', hasBom: true }
+  }
+  if (bytes.length >= 2 && bytes[0] === 0xfe && bytes[1] === 0xff) {
+    return { encoding: 'utf-16be', hasBom: true }
+  }
+  if (bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) {
+    return { encoding: 'utf-8', hasBom: true }
+  }
+
+  let evenZero = 0
+  let oddZero = 0
+  for (let i = 0; i < bytes.length; i += 1) {
+    if (bytes[i] === 0) {
+      if (i % 2 === 0) evenZero += 1
+      else oddZero += 1
+    }
+  }
+  if (oddZero > evenZero * 2) {
+    return { encoding: 'utf-16le', hasBom: false }
+  }
+  if (evenZero > oddZero * 2) {
+    return { encoding: 'utf-16be', hasBom: false }
+  }
+  return { encoding: 'utf-8', hasBom: false }
+}
+
+function decodeBytes(bytes: Uint8Array, encoding: 'utf-8' | 'utf-16le' | 'utf-16be'): string {
+  if (encoding === 'utf-8') {
+    const bomStripped =
+      bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf ? bytes.subarray(3) : bytes
+    return new TextDecoder('utf-8').decode(bomStripped)
+  }
+  if (encoding === 'utf-16le') {
+    const bomStripped = bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xfe ? bytes.subarray(2) : bytes
+    return new TextDecoder('utf-16le').decode(bomStripped)
+  }
+  const bomStripped = bytes.length >= 2 && bytes[0] === 0xfe && bytes[1] === 0xff ? bytes.subarray(2) : bytes
+  return new TextDecoder('utf-16be').decode(bomStripped)
+}
+
+function encodeText(
+  text: string,
+  encoding: 'utf-8' | 'utf-16le' | 'utf-16be',
+  withBom: boolean,
+): Uint8Array {
+  if (encoding === 'utf-8') {
+    const utf8 = new TextEncoder().encode(text)
+    if (!withBom) return utf8
+    const out = new Uint8Array(utf8.length + 3)
+    out.set([0xef, 0xbb, 0xbf], 0)
+    out.set(utf8, 3)
+    return out
+  }
+
+  const bomLength = withBom ? 2 : 0
+  const out = new Uint8Array(bomLength + text.length * 2)
+  if (withBom) {
+    if (encoding === 'utf-16le') {
+      out[0] = 0xff
+      out[1] = 0xfe
+    } else {
+      out[0] = 0xfe
+      out[1] = 0xff
+    }
+  }
+  let offset = bomLength
+  for (let i = 0; i < text.length; i += 1) {
+    const code = text.charCodeAt(i)
+    const low = code & 0xff
+    const high = (code >> 8) & 0xff
+    if (encoding === 'utf-16le') {
+      out[offset] = low
+      out[offset + 1] = high
+    } else {
+      out[offset] = high
+      out[offset + 1] = low
+    }
+    offset += 2
+  }
+  return out
 }
 
 function sendCommand(command: 'start' | 'stop' | 'restart') {
