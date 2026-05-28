@@ -101,8 +101,12 @@ async def list_servers() -> dict:
 async def steam_login(request: Request, next: str | None = None):
     next_url = next or str(request.base_url)
 
-    base_url = str(request.base_url).rstrip("/")
-    callback_url = f"{base_url}/auth/steam/callback"
+    base_callback = str(request.url_for("steam_callback"))
+    if "/api/" not in base_callback and ".ru/auth/" in base_callback:
+        callback_url = base_callback.replace(".ru/auth/", ".ru/api/auth/")
+    else:
+        callback_url = base_callback
+        
     return_to = append_query_params(callback_url, {"next": next_url})
 
     realm_parsed = urlparse(next_url)
