@@ -25,7 +25,13 @@ const loading = ref(false)
 const error = ref('')
 
 const upcomingEvents = [
-  { id: 1, round: 'ROUND 7', title: 'Porsche Cup Monza', date: '14 JUN 2026', location: 'Monza', series: 'One Make Cup' },
+  { id: 1, round: 'ROUND 7', 
+  image: 'https://racehub.s3.cloud.ru/p1.jpg',
+  imagemap: 'https://racehub.s3.cloud.ru/monza-map2',
+  title: 'Porsche Cup Monza', 
+  date: '14 JUN 2026', 
+  location: 'Monza', 
+  series: 'One Make Cup' },
   {
     id: 2,
     round: 'ROUND 8',
@@ -33,8 +39,12 @@ const upcomingEvents = [
     date: '28 JUN 2026',
     location: 'Barcelona-Catalunya',
     series: 'GT Sprint',
+    image: 'https://racehub.s3.cloud.ru/p2%201.png',
+    imagemap: 'https://racehub.s3.cloud.ru/barcelona-map',
   },
-  { id: 3, round: 'ROUND 9', title: 'ACC Endurance Spa', date: '12 JUL 2026', location: 'Spa-Francorchamps', series: 'Endurance' },
+  { id: 3, image: 'https://i.pinimg.com/1200x/4b/e5/5a/4be55a994de3744883a15138a217fc15.jpg',
+  imagemap: 'https://racehub.s3.cloud.ru/spa-map',
+   round: 'ROUND 9', title: 'ACC Endurance Spa', date: '12 JUL 2026', location: 'Spa-Francorchamps', series: 'Endurance' },
 ]
 
 const categories = [
