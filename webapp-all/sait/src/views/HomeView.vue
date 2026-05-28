@@ -1,0 +1,79 @@
+<template>
+  <section class="home-layout">
+    <UpcomingEventsCarousel :events="upcomingEvents" />
+    <CategoriesLine :categories="categories" />
+    <HomeNewsSection />
+    <ServersSection :servers="servers" :loading="loading" :error="error" @refresh="loadServers" />
+  </section>
+</template>
+
+<script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+import CategoriesLine from '../components/home/CategoriesLine.vue'
+import HomeNewsSection from '../components/home/HomeNewsSection.vue'
+import ServersSection from '../components/home/ServersSection.vue'
+import UpcomingEventsCarousel from '../components/home/UpcomingEventsCarousel.vue'
+
+type ServerItem = {
+  ip: string
+  last_seen_at: string
+}
+
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
+const servers = ref<ServerItem[]>([])
+const loading = ref(false)
+const error = ref('')
+
+const upcomingEvents = [
+  { id: 1, round: 'ROUND 7', title: 'Porsche Cup Monza', date: '14 JUN 2026', location: 'Monza', series: 'One Make Cup' },
+  {
+    id: 2,
+    round: 'ROUND 8',
+    title: 'ACC GT Sprint Barcelona',
+    date: '28 JUN 2026',
+    location: 'Barcelona-Catalunya',
+    series: 'GT Sprint',
+  },
+  { id: 3, round: 'ROUND 9', title: 'ACC Endurance Spa', date: '12 JUL 2026', location: 'Spa-Francorchamps', series: 'Endurance' },
+]
+
+const categories = [
+  { name: 'Porsche Cup', description: 'One-make sprint races' },
+  { name: 'GT3 Pro', description: 'Top split competition' },
+  { name: 'GT3 AM', description: 'Gentleman drivers' },
+  { name: 'Endurance', description: 'Multi-hour team format' },
+]
+
+let refreshTimer: number | undefined
+
+async function loadServers() {
+  loading.value = true
+  error.value = ''
+  try {
+    const response = await fetch(`${apiBaseUrl}/servers`)
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    const payload = await response.json()
+    servers.value = Array.isArray(payload.servers) ? payload.servers : []
+  } catch (err) {
+    error.value = `Не удалось загрузить сервера: ${(err as Error).message}`
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  loadServers()
+  refreshTimer = window.setInterval(loadServers, 7000)
+})
+
+onUnmounted(() => {
+  if (refreshTimer) window.clearInterval(refreshTimer)
+})
+</script>
+
+<style scoped>
+.home-layout {
+  display: grid;
+  gap: 24px;
+}
+</style>
