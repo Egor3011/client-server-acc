@@ -102,7 +102,7 @@ async def steam_login(request: Request, next: str | None = None):
     next_url = next or str(request.base_url)
 
     base_url = str(request.base_url).rstrip("/")
-    callback_url = f"{base_url}/auth/steam/callback"
+    callback_url = f"{base_url}/api/auth/steam/callback"
     return_to = append_query_params(callback_url, {"next": next_url})
 
     realm_parsed = urlparse(next_url)
