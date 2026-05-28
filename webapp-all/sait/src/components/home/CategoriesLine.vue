@@ -6,7 +6,7 @@
         :key="category.name"
         :href="category.href ?? '#'"
         class="promo-card"
-        @click.prevent
+
       >
         <span class="promo-inner">
           <div class="promo-content">

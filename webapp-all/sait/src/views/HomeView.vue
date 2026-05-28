@@ -48,10 +48,10 @@ const upcomingEvents = [
 ]
 
 const categories = [
-  { name: 'Porsche Cup', description: 'One-make sprint races' },
-  { name: 'GT3 Pro', description: 'Top split competition' },
-  { name: 'GT3 AM', description: 'Gentleman drivers' },
-  { name: 'Endurance', description: 'Multi-hour team format' },
+  { name: 'Porsche Cup', description: 'One-make sprint races', href: "/porsche-cup" },
+  { name: 'GT3 Pro', description: 'Top split competition', href: "/gt3-pro" },
+  { name: 'GT3 AM', description: 'Gentleman drivers', href: "/gt3-am" },
+  { name: 'Endurance', description: 'Multi-hour team format', href: "/endurance" },
 ]
 
 let refreshTimer: number | undefined

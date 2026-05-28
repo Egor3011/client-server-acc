@@ -17,7 +17,6 @@
   border: 1px solid rgba(255, 255, 255, 0.16);
   padding: 24px;
   clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
-  background: linear-gradient(140deg, rgba(128, 0, 0, 0.5), rgba(10, 11, 16, 0.9));
 }
 
 .code {
