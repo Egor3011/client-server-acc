@@ -31,28 +31,28 @@ const news = [
     title: 'Porsche Cup: обновлен регламент Sprint Weekend',
     date: '28 MAY 2026',
     image:
-      'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80',
+      'https://i.pinimg.com/1200x/d7/84/78/d784789e23bd5705af81c8c0ee90a7f1.jpg',
   },
   {
     id: 2,
     title: 'Monza: открыта регистрация на этап GT3 Pro',
     date: '27 MAY 2026',
     image:
-      'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80',
+      'https://i.pinimg.com/1200x/ca/b2/f0/cab2f03dbdf96ecc44af03caa3ebb535.jpg',
   },
   {
     id: 3,
     title: 'Endurance Spa: опубликованы составы команд',
     date: '26 MAY 2026',
     image:
-      'https://images.unsplash.com/photo-1471478331149-c72f17e33c73?auto=format&fit=crop&w=900&q=80',
+      'https://i.pinimg.com/736x/d5/17/cc/d517cc69456c0a443ffbaf772c7cd303.jpg',
   },
   {
     id: 4,
     title: 'Server update: ускорена синхронизация конфигов',
     date: '24 MAY 2026',
     image:
-      'https://images.unsplash.com/photo-1514302240736-b1fee5985889?auto=format&fit=crop&w=900&q=80',
+      'https://i.pinimg.com/736x/d0/24/c4/d024c4f16e5954aecf7adb707c6ca2f2.jpg',
   },
 ]
 </script>
