@@ -4,7 +4,6 @@ from typing import Any
 from typing import Dict
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
-import httpx
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -101,7 +100,9 @@ async def list_servers() -> dict:
 @app.get("/auth/steam/login")
 async def steam_login(request: Request, next: str | None = None):
     next_url = next or str(request.base_url)
-    callback_url = str(request.url_for("steam_callback"))
+
+    base_url = str(request.base_url).rstrip("/")
+    callback_url = f"{base_url}/auth/steam/callback"
     return_to = append_query_params(callback_url, {"next": next_url})
 
     realm_parsed = urlparse(next_url)
@@ -125,19 +126,13 @@ async def steam_callback(request: Request, next: str | None = None):
     verify_params = {k: v for k, v in query_params.items() if k.startswith("openid.")}
     verify_params["openid.mode"] = "check_authentication"
 
-    # Делаем асинхронный POST-запрос к Steam
-    async with httpx.AsyncClient() as client:
-        try:
-            response = await client.post(
-                STEAM_OPENID_ENDPOINT,
-                data=verify_params,
-                # Добавим User-Agent, чтобы прикинуться обычным браузером
-                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-            )
-            verify_response = response.text
-        except httpx.HTTPError:
-            redirect_to = append_query_params(next or str(request.base_url), {"steam_error": "timeout_or_error"})
-            return RedirectResponse(url=redirect_to, status_code=302)
+    verify_request = Request(
+        STEAM_OPENID_ENDPOINT,
+        data=urlencode(verify_params).encode("utf-8"),
+        method="POST",
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+    )
+    verify_response = urlopen(verify_request, timeout=8).read().decode("utf-8", errors="ignore")
 
     if "is_valid:true" not in verify_response:
         redirect_to = append_query_params(next or str(request.base_url), {"steam_error": "invalid_response"})

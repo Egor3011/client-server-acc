@@ -53,7 +53,6 @@ defineProps<{
   color: #ffffff;
   min-height: 102px;
   display: grid;
-  cursor: pointer;
   align-items: stretch;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(17, 19, 25, 0.9);
@@ -63,10 +62,8 @@ defineProps<{
 
 .promo-card:hover {
   transform: translateY(-1px);
-  border-radius: 10px 0px;
-  cursor: pointer;
   border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(141, 13, 13, 0.96);
+  background: rgba(22, 24, 32, 0.96);
 }
 
 .promo-inner {

@@ -7,6 +7,8 @@ const steamId = ref<string | null>(null)
 const steamLoginUrl = computed(() => {
   if (typeof window === 'undefined') return '#'
   const next = `${window.location.origin}${window.location.pathname}`
+  console.log(next)
+  console.log(`${apiBaseUrl}/auth/steam/login?next=${encodeURIComponent(next)}`)
   return `${apiBaseUrl}/auth/steam/login?next=${encodeURIComponent(next)}`
 })
 
@@ -39,8 +41,8 @@ onMounted(() => {
       <div class="brand">
         <span class="brand-accent" />
         <div class="brand-text">
-          <strong>RACE-hub</strong>
-          <small>GT Series / TESTING</small>
+          <strong>ACC Racing Hub</strong>
+          <small>Porsche Cup / GT Series</small>
         </div>
       </div>
 
