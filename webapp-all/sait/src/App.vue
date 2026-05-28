@@ -40,7 +40,7 @@ onMounted(() => {
         <span class="brand-accent" />
         <div class="brand-text">
           <strong>RACE-hub</strong>
-          <small>GT Series</small>
+          <small>GT Series / TESTING</small>
         </div>
       </div>
 
