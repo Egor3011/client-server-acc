@@ -62,36 +62,25 @@
   });
   
   onMounted(async () => {
-    const newsId = route.params.id;
+    const newsId = route.params.id; // Например, 'news1'
     try {
-        // Добавляем ?t=время, чтобы каждый запрос был уникальным для кеша браузера
-        const cacheBuster = `?t=${new Date().getTime()}`;
-        const url = `https://cloud.ru{newsId}.txt${cacheBuster}`;
-
-        const response = await fetch(url, {
-        method: 'GET',
-        mode: 'cors', // Браузер обязан проверить CORS-заголовки
-        headers: {
-            'Accept': 'text/plain'
-        }
-        });
-
-        if (!response.ok) throw new Error('Файл не найден на S3');
-
-        const rawText = await response.text();
-        const parsed = parseMarkdown(rawText);
-        news.value = {
+      const response = await fetch(`${S3_BUCKET_URL}/${newsId}.txt`);
+      if (!response.ok) throw new Error('Новость не найдена');
+      
+      const rawText = await response.text();
+      const parsed = parseMarkdown(rawText);
+      
+      news.value = {
         title: parsed.meta.title || 'Без названия',
         date: parsed.meta.date || '',
         content: parsed.content
-        };
+      };
     } catch (error) {
-        console.error('Ошибка:', error);
+      console.error('Ошибка при получении новости из S3:', error);
     } finally {
-        loading.value = false;
+      loading.value = false;
     }
-    });
-
+  });
   </script>
   
   <style scoped>
