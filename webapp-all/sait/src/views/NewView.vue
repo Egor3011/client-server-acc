@@ -67,7 +67,7 @@
     try {
         // Сброс кэша браузера (добавляем уникальный таймштамп к ссылке)
         const cacheBuster = `?t=${new Date().getTime()}`;
-        const url = `${S3_BUCKET_URL}/${newsId}.txt`;
+        const url = `${S3_BUCKET_URL}/news/${newsId}.txt`;
 
         const response = await fetch(url, {
         method: 'GET',
