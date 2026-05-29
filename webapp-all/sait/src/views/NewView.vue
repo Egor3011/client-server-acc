@@ -21,7 +21,7 @@
   const loading = ref(true);
   
   // Базовый URL вашего S3 бакета
-  const S3_BUCKET_URL = 'https://racehub.s3.cloud.ru/news';
+  const S3_BUCKET_URL = '/s3-proxy/news';
   
   const parseMarkdown = (text) => {
     // Заменяем Windows-переносы строк \r\n на стандартные \n
