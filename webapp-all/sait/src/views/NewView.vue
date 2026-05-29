@@ -21,7 +21,7 @@
   const loading = ref(true);
   
   // Базовый URL вашего S3 бакета
-  const S3_BUCKET_URL = '/s3-proxy/news';
+  const S3_BUCKET_URL = 'https://racehub.s3.cloud.ru';
   
   const parseMarkdown = (text) => {
     // Заменяем Windows-переносы строк \r\n на стандартные \n
@@ -60,27 +60,36 @@
       breaks: true // Переносы строк как в оригинале
     });
   });
-  
+
+
   onMounted(async () => {
-    const newsId = route.params.id; // Например, 'news1'
+    const newsId = route.params.id;
     try {
-      const response = await fetch(`${S3_BUCKET_URL}/${newsId}.txt`);
-      if (!response.ok) throw new Error('Новость не найдена');
-      
-      const rawText = await response.text();
-      const parsed = parseMarkdown(rawText);
-      
-      news.value = {
+        // Сброс кэша браузера (добавляем уникальный таймштамп к ссылке)
+        const cacheBuster = `?t=${new Date().getTime()}`;
+        const url = `${S3_BUCKET_URL}/${newsId}.txt${cacheBuster}`;
+
+        const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors' // Браузер обязан проверить новые правила CORS от Cloud.ru
+        });
+
+        if (!response.ok) throw new Error('Новость не найдена на S3');
+
+        const rawText = await response.text();
+        const parsed = parseMarkdown(rawText); // Ваша функция парсинга
+        
+        news.value = {
         title: parsed.meta.title || 'Без названия',
         date: parsed.meta.date || '',
         content: parsed.content
-      };
+        };
     } catch (error) {
-      console.error('Ошибка при получении новости из S3:', error);
+        console.error('Ошибка при получении новости:', error);
     } finally {
-      loading.value = false;
+        loading.value = false;
     }
-  });
+    });
   </script>
   
   <style scoped>
