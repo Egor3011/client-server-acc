@@ -17,6 +17,7 @@ const router = createRouter({
     {
       path: '/new/:id',
       name: 'new',
+      // @ts-ignore
       component: () => import('../views/NewView.vue'),
     },
     {
