@@ -31,7 +31,12 @@ const router = createRouter({
       name: 'help',
       component: () => import('../views/HelpView.vue'),
     },
-    
+    {
+      path: '/dc',
+      name: 'discord',
+      // @ts-ignore
+      component: () => import('../views/DcView.vue'),
+    },
 
 
     {

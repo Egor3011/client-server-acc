@@ -42,6 +42,11 @@ defineProps<{
   padding: 2px 0;
 }
 
+.promo-soon {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.572);
+}
+
 .promo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
