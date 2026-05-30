@@ -3,7 +3,9 @@
     <UpcomingEventsCarousel :events="upcomingEvents" />
     <CategoriesLine :categories="categories" />
     <HomeNewsSection />
+    <LeaderBoard/>
     <ServersSection :servers="servers" :loading="loading" :error="error" @refresh="loadServers" />
+
   </section>
 </template>
 
@@ -13,6 +15,7 @@ import CategoriesLine from '../components/home/CategoriesLine.vue'
 import HomeNewsSection from '../components/home/HomeNewsSection.vue'
 import ServersSection from '../components/home/ServersSection.vue'
 import UpcomingEventsCarousel from '../components/home/UpcomingEventsCarousel.vue'
+import LeaderBoard from '../components/home/LeaderBoard.vue'
 
 type ServerItem = {
   ip: string

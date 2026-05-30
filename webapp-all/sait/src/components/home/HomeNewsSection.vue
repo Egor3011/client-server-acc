@@ -68,7 +68,6 @@ const news = [
 .news-backdrop {
   position: absolute;
   inset: 0;
-  opacity: 0.35;
 }
 
 .news-content {

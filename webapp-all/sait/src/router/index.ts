@@ -21,6 +21,12 @@ const router = createRouter({
       component: () => import('../views/NewView.vue'),
     },
     {
+      path: '/form/:id',
+      name: 'form',
+      // @ts-ignore
+      component: () => import('../views/FormView.vue'),
+    },
+    {
       path: '/help',
       name: 'help',
       component: () => import('../views/HelpView.vue'),
