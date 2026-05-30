@@ -3,7 +3,7 @@
         
     <div class="dashboard-header-block">
         <div>
-            <h2>Event: Faster on SPA</h2>
+            <h2>Event: Faster on MONZA</h2>
             <p>Set the fastest lap on this week and get cool prizes</p>
         </div>
         <div class="timer-container">
@@ -15,7 +15,7 @@
     <div class="dashboard-main-block">
       <div class="track-section">
         <div class="track-bg"></div>
-        <img src="https://racehub.s3.cloud.ru/spa-map" alt="Track Map" class="track-map" />
+        <img src="https://racehub.s3.cloud.ru/monza-map2" alt="Track Map" class="track-map" />
       </div>
   
       <!-- Правая часть: Лидерборд ACC -->
@@ -106,77 +106,553 @@
 
   
   const leaderboard = ref([
-    {
-        position: 1,
-        name: "M. Verstappen",
-        car: "Red Bull Racing",
-        gap: "Leader",
-        best_lap: "1:41.254"
-    },
-    {
-        position: 2,
-        name: "L. Norris",
-        car: "McLaren M4 GT3",
-        gap: "+0.142",
-        best_lap: "1:41.396"
-    },
-    {
-        position: 3,
-        name: "C. Leclerc",
-        car: "Ferrari 296 GT3",
-        gap: "+0.415",
-        best_lap: "1:41.669"
-    },
-    {
-        position: 4,
-        name: "L. Hamilton",
-        car: "Mercedes AMG GT3 Evo",
-        gap: "+0.891",
-        best_lap: "1:42.145"
-    },
-    {
-        position: 5,
-        name: "G. Russell",
-        car: "Mercedes AMG GT3 Evo",
-        gap: "+1.102",
-        best_lap: "1:42.356"
-    },
-    {
-        position: 6,
-        name: "C. Sainz",
-        car: "Ferrari 296 GT3",
-        gap: "+1.150",
-        best_lap: "1:42.404"
-    },
-    {
-        position: 7,
-        name: "O. Piastri",
-        car: "McLaren M4 GT3",
-        gap: "+1.423",
-        best_lap: "1:42.677"
-    },
-    {
-        position: 8,
-        name: "A. Albon",
-        car: "Aston Martin V12",
-        gap: "+1.856",
-        best_lap: "1:43.110"
-    },
-    {
-        position: 9,
-        name: "P. Gasly",
-        car: "Alpine A110 GT3",
-        gap: "+2.012",
-        best_lap: "1:43.266"
-    },
-    {
-        position: 10,
-        name: "E. Ocon",
-        car: "Alpine A110 GT3",
-        gap: "+2.405",
-        best_lap: "1:43.659"
-    }
-    ]);
+  {
+            "position": 1,
+            "name": "I. Sidorov",
+            "car": "Nissan GT-R Nismo GT3",
+            "gap": "Leader",
+            "best_lap": "1:47.327"
+        },
+        {
+            "position": 2,
+            "name": "E. Ljungberg",
+            "car": "Mercedes-AMG GT3",
+            "gap": "+0.633",
+            "best_lap": "1:47.960"
+        },
+        {
+            "position": 3,
+            "name": "A. Giglietti",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+0.903",
+            "best_lap": "1:48.230"
+        },
+        {
+            "position": 4,
+            "name": "J. GT",
+            "car": "AMR V8 Vantage",
+            "gap": "+1.005",
+            "best_lap": "1:48.332"
+        },
+        {
+            "position": 5,
+            "name": "G. Stat1covich",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+1.063",
+            "best_lap": "1:48.390"
+        },
+        {
+            "position": 6,
+            "name": "В. Марко",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+1.270",
+            "best_lap": "1:48.597"
+        },
+        {
+            "position": 7,
+            "name": "D. Dieguez",
+            "car": "Lexus RC F GT3",
+            "gap": "+1.343",
+            "best_lap": "1:48.670"
+        },
+        {
+            "position": 8,
+            "name": "M. alexander",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+1.365",
+            "best_lap": "1:48.692"
+        },
+        {
+            "position": 9,
+            "name": "B. Britva",
+            "car": "BMW M4 GT3",
+            "gap": "+1.395",
+            "best_lap": "1:48.722"
+        },
+        {
+            "position": 10,
+            "name": "R. Gallo",
+            "car": "Ferrari 296 GT3",
+            "gap": "+1.395",
+            "best_lap": "1:48.722"
+        },
+        {
+            "position": 11,
+            "name": "S. Faiz",
+            "car": "Lexus RC F GT3",
+            "gap": "+1.425",
+            "best_lap": "1:48.752"
+        },
+        {
+            "position": 12,
+            "name": "B. Omaruly",
+            "car": "BMW M4 GT3",
+            "gap": "+1.485",
+            "best_lap": "1:48.812"
+        },
+        {
+            "position": 13,
+            "name": "E. Aksenov",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+1.530",
+            "best_lap": "1:48.857"
+        },
+        {
+            "position": 14,
+            "name": "P. Bebroy",
+            "car": "Lexus RC F GT3",
+            "gap": "+1.648",
+            "best_lap": "1:48.975"
+        },
+        {
+            "position": 15,
+            "name": "M. Rönnlund",
+            "car": "Mercedes-AMG GT3",
+            "gap": "+1.658",
+            "best_lap": "1:48.985"
+        },
+        {
+            "position": 16,
+            "name": "I. de Gennaro",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+1.675",
+            "best_lap": "1:49.002"
+        },
+        {
+            "position": 17,
+            "name": "A. Chernov",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+2.043",
+            "best_lap": "1:49.370"
+        },
+        {
+            "position": 18,
+            "name": "J. Klebo",
+            "car": "Lexus RC F GT3",
+            "gap": "+2.100",
+            "best_lap": "1:49.427"
+        },
+        {
+            "position": 19,
+            "name": "A. Sharma",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+2.143",
+            "best_lap": "1:49.470"
+        },
+        {
+            "position": 20,
+            "name": "M. Pregartner",
+            "car": "Lamborghini Huracan Evo2",
+            "gap": "+2.168",
+            "best_lap": "1:49.495"
+        },
+        {
+            "position": 21,
+            "name": "P. Vettel",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+2.183",
+            "best_lap": "1:49.510"
+        },
+        {
+            "position": 22,
+            "name": "J. Ron",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+2.318",
+            "best_lap": "1:49.645"
+        },
+        {
+            "position": 23,
+            "name": "E. Martín",
+            "car": "Porsche 911II GT3 R",
+            "gap": "+2.330",
+            "best_lap": "1:49.657"
+        },
+        {
+            "position": 24,
+            "name": "A. Ramirez",
+            "car": "AMR V8 Vantage",
+            "gap": "+2.370",
+            "best_lap": "1:49.697"
+        },
+        {
+            "position": 25,
+            "name": "V. Morgan",
+            "car": "Porsche 992 GT3 R",
+            "gap": "+2.380",
+            "best_lap": "1:49.707"
+        },
+        {
+            "position": 26,
+            "name": "M. Lankin",
+            "car": "AMR V8 Vantage",
+            "gap": "+2.538",
+            "best_lap": "1:49.865"
+        },
+        {
+            "position": 27,
+            "name": "D. Ricciardo",
+            "car": "BMW M4 GT3",
+            "gap": "+2.688",
+            "best_lap": "1:50.015"
+        },
+        {
+            "position": 28,
+            "name": "М. бублик",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+2.838",
+            "best_lap": "1:50.165"
+        },
+        {
+            "position": 29,
+            "name": "Tintanic",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+2.908",
+            "best_lap": "1:50.235"
+        },
+        {
+            "position": 30,
+            "name": "E. M",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+2.960",
+            "best_lap": "1:50.287"
+        },
+        {
+            "position": 31,
+            "name": "N. Said",
+            "car": "BMW M4 GT3",
+            "gap": "+3.175",
+            "best_lap": "1:50.502"
+        },
+        {
+            "position": 32,
+            "name": "J. Urbanski",
+            "car": "BMW M4 GT3",
+            "gap": "+3.305",
+            "best_lap": "1:50.632"
+        },
+        {
+            "position": 33,
+            "name": "V. Sharma",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+3.593",
+            "best_lap": "1:50.920"
+        },
+        {
+            "position": 34,
+            "name": "J. DESOMB",
+            "car": "Ferrari 296 GT3",
+            "gap": "+3.613",
+            "best_lap": "1:50.940"
+        },
+        {
+            "position": 35,
+            "name": "Н. Шахов",
+            "car": "Audi R8 LMS GT3 evo II",
+            "gap": "+3.678",
+            "best_lap": "1:51.005"
+        },
+        {
+            "position": 36,
+            "name": "L. Lopez",
+            "car": "AMR V8 Vantage",
+            "gap": "+3.770",
+            "best_lap": "1:51.097"
+        },
+        {
+            "position": 37,
+            "name": "С. АНДРЮНИН",
+            "car": "Ferrari 296 GT3",
+            "gap": "+3.883",
+            "best_lap": "1:51.210"
+        },
+        {
+            "position": 38,
+            "name": "M. Kostylev",
+            "car": "BMW M4 GT3",
+            "gap": "+3.958",
+            "best_lap": "1:51.285"
+        },
+        {
+            "position": 39,
+            "name": "F. Sulzbacher",
+            "car": "Mercedes-AMG GT3",
+            "gap": "+4.130",
+            "best_lap": "1:51.457"
+        },
+        {
+            "position": 40,
+            "name": "O. Fast",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+4.153",
+            "best_lap": "1:51.480"
+        },
+        {
+            "position": 41,
+            "name": "P. Groot",
+            "car": "Lamborghini Huracan Evo2",
+            "gap": "+4.418",
+            "best_lap": "1:51.745"
+        },
+        {
+            "position": 42,
+            "name": "s. 666",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+4.443",
+            "best_lap": "1:51.770"
+        },
+        {
+            "position": 43,
+            "name": "J. Rycerz",
+            "car": "Audi R8 LMS GT3 evo II",
+            "gap": "+4.475",
+            "best_lap": "1:51.802"
+        },
+        {
+            "position": 44,
+            "name": "C. Burtin",
+            "car": "BMW M4 GT3",
+            "gap": "+4.498",
+            "best_lap": "1:51.825"
+        },
+        {
+            "position": 45,
+            "name": "e. karpunin",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+4.585",
+            "best_lap": "1:51.912"
+        },
+        {
+            "position": 46,
+            "name": "g. baldini",
+            "car": "Lamborghini Huracan Evo2",
+            "gap": "+4.953",
+            "best_lap": "1:52.280"
+        },
+        {
+            "position": 47,
+            "name": "O. Shunevych",
+            "car": "Ferrari 296 GT3",
+            "gap": "+5.113",
+            "best_lap": "1:52.440"
+        },
+        {
+            "position": 48,
+            "name": "K. Gordejev",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+5.198",
+            "best_lap": "1:52.525"
+        },
+        {
+            "position": 49,
+            "name": "Ş. Köse",
+            "car": "BMW M4 GT3",
+            "gap": "+5.558",
+            "best_lap": "1:52.885"
+        },
+        {
+            "position": 50,
+            "name": "M. Rehnström",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+5.658",
+            "best_lap": "1:52.985"
+        },
+        {
+            "position": 51,
+            "name": "F. Brumatti",
+            "car": "Mercedes-AMG GT3",
+            "gap": "+5.723",
+            "best_lap": "1:53.050"
+        },
+        {
+            "position": 52,
+            "name": "U. Dağaşar",
+            "car": "BMW M4 GT3",
+            "gap": "+5.803",
+            "best_lap": "1:53.130"
+        },
+        {
+            "position": 53,
+            "name": "S. Kuzyuchela",
+            "car": "Porsche 992 GT3 R",
+            "gap": "+5.908",
+            "best_lap": "1:53.235"
+        },
+        {
+            "position": 54,
+            "name": "Е. Михайлов",
+            "car": "Ferrari 296 GT3",
+            "gap": "+5.958",
+            "best_lap": "1:53.285"
+        },
+        {
+            "position": 55,
+            "name": "E. Sladkevičius",
+            "car": "BMW M4 GT3",
+            "gap": "+5.993",
+            "best_lap": "1:53.320"
+        },
+        {
+            "position": 56,
+            "name": "y. Z",
+            "car": "BMW M4 GT3",
+            "gap": "+6.003",
+            "best_lap": "1:53.330"
+        },
+        {
+            "position": 57,
+            "name": "G. de Gennaro",
+            "car": "Ferrari 296 GT3",
+            "gap": "+6.235",
+            "best_lap": "1:53.562"
+        },
+        {
+            "position": 58,
+            "name": "A.Penkovsky",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+6.383",
+            "best_lap": "1:53.710"
+        },
+        {
+            "position": 59,
+            "name": "B. Lmt",
+            "car": "Ferrari 488 GT3",
+            "gap": "+6.403",
+            "best_lap": "1:53.730"
+        },
+        {
+            "position": 60,
+            "name": "T. Eagle",
+            "car": "Audi R8 LMS GT3 evo II",
+            "gap": "+6.545",
+            "best_lap": "1:53.872"
+        },
+        {
+            "position": 61,
+            "name": "B. Nolikovich",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+6.568",
+            "best_lap": "1:53.895"
+        },
+        {
+            "position": 62,
+            "name": "n. ///",
+            "car": "Porsche 911II GT3 R",
+            "gap": "+6.585",
+            "best_lap": "1:53.912"
+        },
+        {
+            "position": 63,
+            "name": "B. szalontai",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+7.085",
+            "best_lap": "1:54.412"
+        },
+        {
+            "position": 64,
+            "name": "K. Bashkirkin",
+            "car": "Mercedes-AMG GT3",
+            "gap": "+7.088",
+            "best_lap": "1:54.415"
+        },
+        {
+            "position": 65,
+            "name": "C. Anselmo",
+            "car": "Porsche 911II GT3 R",
+            "gap": "+7.155",
+            "best_lap": "1:54.482"
+        },
+        {
+            "position": 66,
+            "name": "B. Pugh",
+            "car": "Nissan GT-R Nismo GT3",
+            "gap": "+7.335",
+            "best_lap": "1:54.662"
+        },
+        {
+            "position": 67,
+            "name": "G. Vito",
+            "car": "Ferrari 296 GT3",
+            "gap": "+7.345",
+            "best_lap": "1:54.672"
+        },
+        {
+            "position": 68,
+            "name": "M. Borovikov",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+7.493",
+            "best_lap": "1:54.820"
+        },
+        {
+            "position": 69,
+            "name": "D. Lux",
+            "car": "Porsche 911II GT3 R",
+            "gap": "+7.498",
+            "best_lap": "1:54.825"
+        },
+        {
+            "position": 70,
+            "name": "R. Baker",
+            "car": "Honda NSX Evo",
+            "gap": "+7.505",
+            "best_lap": "1:54.832"
+        },
+        {
+            "position": 71,
+            "name": "H. B.",
+            "car": "Ferrari 296 GT3",
+            "gap": "+7.698",
+            "best_lap": "1:55.025"
+        },
+        {
+            "position": 72,
+            "name": "W. winch",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+7.768",
+            "best_lap": "1:55.095"
+        },
+        {
+            "position": 73,
+            "name": "M. Moraes",
+            "car": "Lamborghini Huracan Evo",
+            "gap": "+7.980",
+            "best_lap": "1:55.307"
+        },
+        {
+            "position": 74,
+            "name": "M. Cramer",
+            "car": "Audi R8 LMS Evo",
+            "gap": "+8.098",
+            "best_lap": "1:55.425"
+        },
+        {
+            "position": 75,
+            "name": "B. Shvets",
+            "car": "Ford Mustang GT3",
+            "gap": "+10.873",
+            "best_lap": "1:58.200"
+        },
+        {
+            "position": 76,
+            "name": "B. Zawadzki",
+            "car": "Lexus RC F GT3",
+            "gap": "+11.663",
+            "best_lap": "1:58.990"
+        },
+        {
+            "position": 77,
+            "name": "C. Go",
+            "car": "McLaren 720S GT3 Evo",
+            "gap": "+11.748",
+            "best_lap": "1:59.075"
+        },
+        {
+            "position": 78,
+            "name": "V. Kovskiy",
+            "car": "BMW M4 GT3",
+            "gap": "+14.383",
+            "best_lap": "2:01.710"
+        }
+]);
 
   
     onMounted(async () => {
@@ -268,8 +744,8 @@
   .track-map {
     position: relative;
     z-index: 2;
-    width: 70%;
-    height: 70%;
+    width: 100%;
+    height: 100%;
     object-fit: contain; /* Увеличивает карту по максимуму, сохраняя пропорции */
     pointer-events: none;
   }

@@ -49,6 +49,7 @@ onMounted(() => {
         <RouterLink to="/" active-class="active">Home</RouterLink>
         <RouterLink to="/news" active-class="active">News</RouterLink>
         <RouterLink to="/help" active-class="active">Help</RouterLink>
+        <RouterLink to="/dc" style="background: #5865f2;" active-class="active">Discord</RouterLink>
       </nav>
 
       <div class="auth-panel">
