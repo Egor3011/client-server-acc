@@ -14,8 +14,10 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import CategoriesLine from '../components/home/CategoriesLine.vue'
 import HomeNewsSection from '../components/home/HomeNewsSection.vue'
 import ServersSection from '../components/home/ServersSection.vue'
-import UpcomingEventsCarousel from '../components/home/UpcomingEventsCarousel.vue'
+
+// @ts-ignore
 import LeaderBoard from '../components/home/LeaderBoard.vue'
+import UpcomingEventsCarousel from '../components/home/UpcomingEventsCarousel.vue'
 
 type ServerItem = {
   ip: string
