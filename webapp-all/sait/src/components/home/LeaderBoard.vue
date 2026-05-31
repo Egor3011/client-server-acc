@@ -32,7 +32,7 @@
             v-for="(driver, index) in leaderboard" 
             :key="driver.position" 
             class="driver-row"
-            :class="{ 'highlighted-user': driver.steam_id === currentUserSteamId.value }"
+            :class="{ 'highlighted-user': driver.steam_id === 'S' + currentUserSteamId.value }"
             :style="{ '--delay': `${index * 0.1}s` }"
             :id="driver.steam_id"
           >
