@@ -1,6 +1,6 @@
 <template>
 <div class="dashboard-block pattern-backdrop">
-        
+    <p>{{ 'S' + currentUserSteamId }}</p>
     <div class="dashboard-header-block">
         <div>
             <h2>Event: Faster on MONZA</h2>
