@@ -113,6 +113,7 @@ def process_single_file(json_data, global_db):
 
         # Сохраняем во временную базу по ключу трассы
         global_db[track][player_id] = {
+            "steam_id": player_id,
             "name": name_str,
             "car": car_name,
             "best_lap_ms": best_lap_ms
@@ -143,6 +144,7 @@ def generate_final_report(global_db):
 
             formatted_list.append({
                 "position": index + 1,
+                "steam_id": driver_data["steam_id"],
                 "name": driver_data["name"],
                 "car": driver_data["car"],
                 "gap": gap_str,

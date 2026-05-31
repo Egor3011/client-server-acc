@@ -27,13 +27,14 @@
           <span class="col-gap">GAP</span>
           <span class="col-lap">BEST LAP</span>
         </div>
-  
         <div class="leaderboard-list">
           <div 
             v-for="(driver, index) in leaderboard" 
             :key="driver.position" 
             class="driver-row"
+            :class="{ 'highlighted-user': driver.steam_id === currentUserSteamId.value }"
             :style="{ '--delay': `${index * 0.1}s` }"
+            :id="driver.steam_id"
           >
             <div class="number-div">
                 <span class="col-pos" :class="{ 'top-three': driver.position <= 3 }">
@@ -57,7 +58,9 @@
 </template>
   
 <script setup>
-  import { ref, onMounted, computed, onUnmounted } from 'vue'
+  import { ref, onMounted, computed, onUnmounted, inject } from 'vue'
+
+  const currentUserSteamId = inject('currentUserSteamId', ref(null))
 
   const targetDate = new Date(2026, 5, 6, 23, 59, 59); // 10 секунд для теста
   const diff = ref(targetDate - Date.now());
@@ -105,7 +108,9 @@
   });
 
   
-  const leaderboard = ref([])
+  const leaderboard = ref([]);
+
+
   const BACKEND_URL = '/api/event/leaderboard'
 
     const fetchLeaderboard = async () => {
@@ -128,6 +133,7 @@
     }
   
     onMounted(async () => {
+        console.log(currentUserSteamId.value)
         // ОБНОВЛЕНО: Изменили интервал на 1000мс (1 секунда), так как МС больше нет
         intervalId = setInterval(updateTimer, 1000);
         
@@ -150,6 +156,19 @@
     #timer.finished {
         color: #ff3333;
         text-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+    }
+
+
+    .driver-row.highlighted-user {
+        background: rgba(255, 215, 0, 0.15); /* Золотистый полупрозрачный фон */
+        border-left: 4px solid #ffd700;       /* Акцентная линия слева */
+        box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1);
+    }
+
+    /* Опционально: можно сделать имя текущего пользователя ярче */
+    .driver-row.highlighted-user .col-name {
+        color: #ffd700;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
     }
 
   /* Главный контейнер */

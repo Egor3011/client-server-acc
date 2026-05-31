@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, provide } from 'vue'
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
 const steamId = ref<string | null>(null)
+
 
 const steamLoginUrl = computed(() => {
   if (typeof window === 'undefined') return '#'
@@ -32,6 +33,8 @@ onMounted(() => {
     window.history.replaceState({}, '', cleanUrl)
   }
 })
+
+provide('currentUserSteamId', steamId)
 </script>
 
 <template>
