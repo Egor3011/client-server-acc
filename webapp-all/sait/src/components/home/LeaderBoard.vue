@@ -1,6 +1,5 @@
 <template>
 <div class="dashboard-block pattern-backdrop">
-    <p>{{ 'S' + currentUserSteamId }}</p>
     <div class="dashboard-header-block">
         <div>
             <h2>Event: Faster on MONZA</h2>
@@ -32,8 +31,8 @@
             v-for="(driver, index) in leaderboard" 
             :key="driver.position" 
             class="driver-row"
-            :class="{ 'highlighted-user': driver.steam_id === 'S' + currentUserSteamId.value }"
-            :style="{ '--delay': `${index * 0.1}s` }"
+            :class="{ 'highlighted-user': driver.steam_id === `S${currentUserSteamId}` }"
+            :style="{ '--delay': `${index * 0.05}s` }"
             :id="driver.steam_id"
           >
             <div class="number-div">
