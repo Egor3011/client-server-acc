@@ -10,8 +10,8 @@ router = APIRouter(prefix="/event")
 security = HTTPBearer()
 
 # НАСТРОЙКИ ГЛАВНОГО СЕРВЕРА
-TARGET_DIR = "./results"       # Папка, куда складывать файлы для "кода №1"
-LEADERBOARD_FILE = "./leaderboard.json"  # Итоговый файл, который генерирует "код №1"
+TARGET_DIR = "/app/data/results"       # Папка, куда складывать файлы для "кода №1"
+LEADERBOARD_FILE = "/app/data/leaderboard.json"  # Итоговый файл, который генерирует "код №1"
 SECRET_TOKEN = "test_token"
 
 os.makedirs(TARGET_DIR, exist_ok=True)

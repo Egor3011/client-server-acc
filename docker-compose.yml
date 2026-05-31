@@ -4,6 +4,10 @@ services:
       context: ./server-backend
     container_name: acc-backend
     restart: unless-stopped
+    volumes:
+      # Связываем локальную папку на сервере с папкой внутри Docker
+      # ./acc_results — папка создастся прямо рядом с файлом docker-compose.yml
+      - ./server-backend/data/results:/app/data
     ports:
       - "8000:8000"
 
