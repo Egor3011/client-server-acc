@@ -53,4 +53,4 @@ async def get_leaderboard():
         
     with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-    return data["monza"]
+    return data["monza"][:150]
