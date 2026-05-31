@@ -37,6 +37,13 @@ const router = createRouter({
       // @ts-ignore
       component: () => import('../views/DcView.vue'),
     },
+    {
+      path: '/event-week',
+      name: 'EventWeek',
+      // @ts-ignore
+      component: () => import('../views/EventWeekView.vue'),
+    },
+
 
 
     {
@@ -47,6 +54,7 @@ const router = createRouter({
     {
       path: '/gt3-am',
       name: 'GT3am',
+      // @ts-ignore
       component: () => import('../views/categories/GT3amView.vue'),
     },
     {

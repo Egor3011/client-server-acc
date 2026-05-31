@@ -6,9 +6,25 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 import urllib.request
 
-from fastapi import FastAPI, Request
+import os
+import sys
+
+print("--- ТЕКУЩАЯ ПАПКА ДЛЯ PYTHON ---")
+print("Путь:", os.getcwd())
+print("Файлы в папке:", os.listdir('.'))
+print("--------------------------------")
+
+# Принудительный абсолютный импорт
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import event_py
+
+from fastapi import FastAPI, Request, UploadFile, File, Form, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+
+
+import results_recucle
 
 
 app = FastAPI(title="ACC Server Registry")
@@ -169,5 +185,7 @@ async def list_players() -> dict[str, Any]:
         "players": list(steam_players.values()),
     }
 
+
+app.include_router(event_py.router)
 
 load_steam_players()

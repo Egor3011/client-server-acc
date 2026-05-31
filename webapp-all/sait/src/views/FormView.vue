@@ -1,10 +1,20 @@
 <template>
-    <div class="form-wrapper" v-if="formConfig">
-      <h2>{{ formConfig.formTitle }}</h2>
+    <div class="form-wrapper pattern-backdrop" v-if="formConfig">
+      <h2 style="margin-bottom: 30px;">{{ formConfig.formTitle }}</h2>
       
       <form @submit.prevent="handleSubmit">
-        <div v-for="field in formConfig.fields" :key="field.id" class="form-group">
-          <label :for="field.id">{{ field.label }} <span v-if="field.required" class="required">*</span></label>
+        <!-- Добавлен динамический класс для чекбокса -->
+        <div 
+          v-for="field in formConfig.fields" 
+          :key="field.id" 
+          class="form-group"
+          :class="{ 'is-checkbox': field.type === 'checkbox' }"
+        >
+          
+          <!-- Стандартный лейбл для текстовых полей и селектов (сверху) -->
+          <label v-if="field.type !== 'checkbox'" :for="field.id">
+            {{ field.label }} <span v-if="field.required" class="required">*</span>
+          </label>
           
           <!-- Текстовые поля и числа -->
           <input 
@@ -27,19 +37,23 @@
             <option v-for="opt in field.options" :key="opt" :value="opt">{{ opt }}</option>
           </select>
   
-          <!-- Чекбокс -->
-          <div v-else-if="field.type === 'checkbox'" class="checkbox-group">
+          <!-- Чекбокс и его лейбл в одну строку (исправлено) -->
+          <template v-else-if="field.type === 'checkbox'">
             <input 
               type="checkbox"
               :id="field.id"
               :required="field.required"
               v-model="formData[field.id]"
             />
-          </div>
+            <label :for="field.id">
+              {{ field.label }} <span v-if="field.required" class="required">*</span>
+            </label>
+          </template>
+  
         </div>
   
-        <button type="submit" :disabled="submitting">
-          {{ submitting ? 'Отправка...' : 'Отправить' }}
+        <button type="submit" :disabled="submitting" class="send-button">
+          {{ submitting ? 'Send...' : 'Send' }}
         </button>
       </form>
       
@@ -61,13 +75,12 @@
   const S3_BUCKET_URL = 'https://racehub.s3.cloud.ru/forms';
   
   onMounted(async () => {
-    const formId = route.params.id; // Получаем имя файла из URL, например 'feedback_form'
+    const formId = route.params.id;
     try {
       const response = await fetch(`${S3_BUCKET_URL}/${formId}.json`);
       const config = await response.json();
       formConfig.value = config;
       
-      // Инициализируем пустые значения для реактивности vue
       config.fields.forEach(field => {
         formData.value[field.id] = field.type === 'checkbox' ? false : '';
       });
@@ -80,11 +93,10 @@
     submitting.value = true;
     successMessage.value = '';
     
-    // Формируем полезную нагрузку (payload) для бэкенда
     const payload = {
-      form_id: formConfig.value.formId, // Чтобы бэкенд знал, какая это форма
+      form_id: formConfig.value.formId,
       submitted_at: new Date().toISOString(),
-      data: formData.value // Объект со всеми ответами пользователя
+      data: formData.value
     };
   
     try {
@@ -96,7 +108,6 @@
   
       if (response.ok) {
         successMessage.value = 'Форма успешно отправлена!';
-        // Сброс формы
         Object.keys(formData.value).forEach(key => {
           formData.value[key] = typeof formData.value[key] === 'boolean' ? false : '';
         });
@@ -112,13 +123,48 @@
   </script>
   
   <style scoped>
-  .form-wrapper { max-width: 500px; margin: 0 auto; padding: 20px; }
-  .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-  .checkbox-group { flex-direction: row; align-items: center; }
-  .required { color: red; }
+  .form-wrapper { 
+    max-width: 500px; 
+    margin: 0 auto; 
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    }
+  .form-group { margin-bottom: 15px; display: flex; flex-direction: column;}
+  
+  /* Стили для строки с чекбоксом */
+  .form-group.is-checkbox {
+    flex-direction: row;      /* Элементы встают в одну строку */
+    align-items: center;      /* Выравнивание по центру по вертикали */
+    gap: 10px;                /* Отступ между чекбоксом и текстом */
+  }
+  
+  /* Убираем верхний отступ у лейбла и инпута внутри строки чекбокса */
+  .form-group.is-checkbox label,
+  .form-group.is-checkbox input {
+    margin: 0;
+    cursor: pointer;
+  }
+  
+  .required { color: rgb(255, 255, 255);  }
   .success { color: green; font-weight: bold; margin-top: 15px; }
-  input, select { padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+  
+  input, select { 
+    padding: 8px; 
+    margin-top: 5px; 
+    border: 1px solid rgba(255, 255, 255, 0.25); 
+    background: rgb(20, 20, 20);
+    border-radius: 12px;
+    padding: 5px 15px;
+    font-size: 16px;  
+    font-weight: 400;
+    font-family: "Titillium Web", Arial, Helvetica, sans-serif;
+  }
+  
   button { padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; }
   button:disabled { background: #ccc; }
+  .send-button {
+    font-weight: 700;
+  }
   </style>
   
