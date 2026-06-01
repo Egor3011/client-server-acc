@@ -166,7 +166,7 @@
         try {
         const response = await fetch(BACKEND_URL) 
 
-        const medriver_res = await fetch(`$/api/event/myposition?${params.toString()}`)
+        const medriver_res = await fetch(`/api/event/myposition?${params.toString()}`)
 
         console.log(`$/api/event/myposition?${params.toString()}`)
         if (response.ok) {
