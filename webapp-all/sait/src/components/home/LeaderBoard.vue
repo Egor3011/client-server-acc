@@ -21,8 +21,8 @@
       <div class="leaderboard-section">
         <div
             class="driver-row"
+            v-if="hasDriverData"
             :class="{ 'highlighted-user': driver.steam_id === `S${currentUserSteamId}` }"
-            :id="medriver.steam_id"
           >
             <div class="number-div">
                 <span class="col-pos top-three">
@@ -38,7 +38,7 @@
                 </span>
                 <span class="col-lap">{{ medriver.best_lap }}</span>
             </div>
-          </div>
+        </div>
         <div class="leaderboard-header">
           <span class="col-pos">#</span>
           <span class="col-name">DRIVER</span>
@@ -172,13 +172,17 @@
         if (response.ok) {
             leaderboard.value = await response.json()
         }
-        if (medriver_res.ok) {
+        if (medriver_res != null) {
             medriver.value = await medriver_res.json()
         }
         } catch (error) {
         console.error('Ошибка загрузки лидерборда:', error)
         }
     })
+
+    const hasDriverData = computed(() => {
+        return medriver.value && Object.keys(medriver.value).length > 0;
+    });
   </script>
   
   <style scoped>
