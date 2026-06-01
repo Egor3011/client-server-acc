@@ -22,7 +22,7 @@
         <div
             class="driver-row"
             v-if="hasDriverData"
-            :class="{ 'highlighted-user': driver.steam_id === `S${currentUserSteamId}` }"
+            :class="{ 'highlighted-user': medriver.steam_id === `S${currentUserSteamId}` }"
           >
             <div class="number-div">
                 <span class="col-pos top-three">
@@ -33,7 +33,7 @@
 
                 <span class="col-name">{{ medriver.name }}</span>
                 <span class="col-car">{{ medriver.car }}</span>
-                <span class="col-gap" :class="{ 'leader-gap': index === 0 }">
+                <span class="col-gap">
                 {{ medriver.gap }}
                 </span>
                 <span class="col-lap">{{ medriver.best_lap }}</span>
