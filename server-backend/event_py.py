@@ -54,3 +54,18 @@ async def get_leaderboard():
     with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data["monza"][:150]
+
+
+@router.get("/myposition")
+async def myposition(steam_id):
+    myid = f"S{steam_id}"
+    if not os.path.exists(LEADERBOARD_FILE):
+        return [] # Возвращаем пустой список, если гонок еще не было
+        
+    with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    for rider in data["monza"]:
+        if str(rider["steam_id"]) == myid:
+            return rider
+    return {}
+    

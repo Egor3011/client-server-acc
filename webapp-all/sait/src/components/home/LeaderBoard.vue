@@ -168,7 +168,7 @@
 
         const medriver_res = await fetch(`/api/event/myposition?${params.toString()}`)
 
-        console.log(`$/api/event/myposition?${params.toString()}`)
+        console.log(`/api/event/myposition?${params.toString()}`)
         if (response.ok) {
             leaderboard.value = await response.json()
         }
