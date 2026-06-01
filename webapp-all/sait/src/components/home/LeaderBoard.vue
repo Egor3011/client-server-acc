@@ -19,7 +19,26 @@
   
       <!-- Правая часть: Лидерборд ACC -->
       <div class="leaderboard-section">
-        <p>Test</p>
+        <div
+            class="driver-row"
+            :class="{ 'highlighted-user': driver.steam_id === `S${currentUserSteamId}` }"
+            :id="medriver.steam_id"
+          >
+            <div class="number-div">
+                <span class="col-pos top-three">
+                {{ medriver.position }}
+                </span>
+            </div>
+            <div class="text-col">
+
+                <span class="col-name">{{ medriver.name }}</span>
+                <span class="col-car">{{ medriver.car }}</span>
+                <span class="col-gap" :class="{ 'leader-gap': index === 0 }">
+                {{ medriver.gap }}
+                </span>
+                <span class="col-lap">{{ medriver.best_lap }}</span>
+            </div>
+          </div>
         <div class="leaderboard-header">
           <span class="col-pos">#</span>
           <span class="col-name">DRIVER</span>
@@ -110,6 +129,8 @@
   
   const leaderboard = ref([]);
 
+  const medriver = ref([])
+
 
   const BACKEND_URL = '/api/event/leaderboard'
 
@@ -136,11 +157,23 @@
         console.log(currentUserSteamId.value)
         // ОБНОВЛЕНО: Изменили интервал на 1000мс (1 секунда), так как МС больше нет
         intervalId = setInterval(updateTimer, 1000);
+
+        const params = new URLSearchParams({
+            steam_id: currentUserSteamId.value // передаем наш ID
+            // сюда можно добавить еще параметры, например: limit: 10
+        })
         
         try {
         const response = await fetch(BACKEND_URL) 
+
+        const medriver_res = await fetch(`$/api/event/myposition?${params.toString()}`)
+
+        console.log(`$/api/event/myposition?${params.toString()}`)
         if (response.ok) {
             leaderboard.value = await response.json()
+        }
+        if (medriver_res.ok) {
+            medriver.value = await medriver_res.json()
         }
         } catch (error) {
         console.error('Ошибка загрузки лидерборда:', error)
