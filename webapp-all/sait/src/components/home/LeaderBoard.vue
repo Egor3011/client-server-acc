@@ -19,6 +19,7 @@
   
       <!-- Правая часть: Лидерборд ACC -->
       <div class="leaderboard-section">
+        <p>Test</p>
         <div class="leaderboard-header">
           <span class="col-pos">#</span>
           <span class="col-name">DRIVER</span>
