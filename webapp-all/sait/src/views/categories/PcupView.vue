@@ -1,6 +1,7 @@
 <template>
     <div class="about">
       <h1>This is an Porsche Cup page</h1>
+      <h2>Comming soon</h2>
     </div>
   </template>
   

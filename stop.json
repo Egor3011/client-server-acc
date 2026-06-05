@@ -1,7 +1,0 @@
-{
-  "commands": [
-    "screen -X -S acc_final quit",
-    "pkill screen",
-    "rm -rf /home/admin/acc-server/server/cfg/current"
-  ]
-}

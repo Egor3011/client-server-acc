@@ -1,6 +1,7 @@
 <template>
     <div class="about">
       <h1>This is an GT3-a page</h1>
+      <h2>Comming soon</h2>
     </div>
   </template>
   

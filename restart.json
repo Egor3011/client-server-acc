@@ -1,8 +1,0 @@
-{
-  "commands": [
-    "screen -X -S acc_final quit",
-    "rm -rf /home/admin/acc-server/server/cfg/current",
-    "cd /home/admin/acc-server/server/ \nscreen -dmS acc_final sh -c 'WINEDEBUG=-all wine accServer.exe; exec sh'",
-    "tail -n 20 /home/admin/acc-server/server/log/server.log"
-  ]
-}
