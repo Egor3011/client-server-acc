@@ -38,14 +38,14 @@ const upcomingEvents = [
   location: '8 TRACKS', 
   series: 'RACE',
   href: "http://race-hub.ru/new/Porsche-Cup"},
-  { id: 3, image: 'https://i.pinimg.com/1200x/4b/e5/5a/4be55a994de3744883a15138a217fc15.jpg',
+  { id: 2, image: 'https://i.pinimg.com/1200x/4b/e5/5a/4be55a994de3744883a15138a217fc15.jpg',
   imagemap: 'https://racehub.s3.cloud.ru/spa-map',
-   round: 'ROUND 2', title: 'Event. FASTER ON Spa', date: '7 - 13 JUL 2026', location: 'Spa-Francorchamps', series: 'Event',
+   round: 'ROUND 2', title: 'Event. FASTER ON Spa', date: '7 - 13 JUN 2026', location: 'Spa-Francorchamps', series: 'Event',
    href: "" },
 ]
 
 const categories = [
-  { name: 'Porsche Cup', description: 'One-make sprint races', href: "/porsche-cup" },
+  { name: 'Porsche Cup', description: 'One-make sprint races', href: "/new/Porsche-Cup" },
   { name: 'GT3 Pro', description: 'Top split competition', href: "/gt3-pro" },
   { name: 'GT3 AM', description: 'Gentleman drivers', href: "/gt3-am" },
   { name: 'Endurance', description: 'Multi-hour team format', href: "/endurance" },
