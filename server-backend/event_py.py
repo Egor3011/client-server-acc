@@ -53,7 +53,7 @@ async def get_leaderboard():
         
     with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-    return data["monza"][:150]
+    return data["spa"][:150]
 
 
 @router.get("/myposition")
@@ -64,7 +64,7 @@ async def myposition(steam_id):
         
     with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-    for rider in data["monza"]:
+    for rider in data["spa"]:
         if str(rider["steam_id"]) == myid:
             return rider
     return {}

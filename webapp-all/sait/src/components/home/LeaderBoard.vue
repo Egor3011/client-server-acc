@@ -2,7 +2,7 @@
 <div class="dashboard-block pattern-backdrop">
     <div class="dashboard-header-block">
         <div>
-            <h2>Event: Faster on MONZA</h2>
+            <h2>Event: Faster on SPA</h2>
             <p>Set the fastest lap on this week and get cool prizes</p>
         </div>
         <div class="timer-container">
@@ -14,7 +14,7 @@
     <div class="dashboard-main-block">
       <div class="track-section">
         <div class="track-bg"></div>
-        <img src="https://racehub.s3.cloud.ru/monza-map2" alt="Track Map" class="track-map" />
+        <img src="https://racehub.s3.cloud.ru/spa-map" alt="Track Map" class="track-map" />
       </div>
   
       <!-- Правая часть: Лидерборд ACC -->
@@ -81,7 +81,7 @@
 
   const currentUserSteamId = inject('currentUserSteamId', ref(null))
 
-  const targetDate = new Date(2026, 5, 6, 23, 59, 59); // 10 секунд для теста
+  const targetDate = new Date(2026, 5, 13, 23, 59, 59); // 10 секунд для теста
   const diff = ref(targetDate - Date.now());
   const isTimerOver = ref(false);
   let intervalId = null;
@@ -272,8 +272,8 @@
   .track-map {
     position: relative;
     z-index: 2;
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 70%;
     object-fit: contain; /* Увеличивает карту по максимуму, сохраняя пропорции */
     pointer-events: none;
   }

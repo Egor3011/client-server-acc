@@ -3,7 +3,7 @@
     <div class="carousel-window">
       <div class="carousel-track" :style="trackStyle">
         <article v-for="event in events" :key="event.id" class="event-card" :style="{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,1) 20%, rgba(0,0,0,0.3) 100%), url(${event.image})`}">
-          <div class="event-card-content">
+          <div class="event-card-content" :href="event.href">
             <p class="event-round">{{ event.round }}</p>
             <h2>{{ event.title }}</h2>
             <p class="event-meta">{{ event.date }} - {{ event.location }}</p>
@@ -43,6 +43,7 @@ type EventItem = {
   date: string
   location: string
   series: string
+  href: string
 }
 
 const props = defineProps<{
