@@ -18,6 +18,7 @@ print("--------------------------------")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import event_py
+from porsche_cup_router import router as porsche_cup
 
 from fastapi import FastAPI, Request, UploadFile, File, Form, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
@@ -187,5 +188,6 @@ async def list_players() -> dict[str, Any]:
 
 
 app.include_router(event_py.router)
+app.include_router(porsche_cup)
 
 load_steam_players()
