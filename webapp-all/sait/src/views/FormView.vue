@@ -65,6 +65,8 @@
   <script setup>
   import { ref, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
+
+  const currentUserSteamId = inject('currentUserSteamId', ref(null))
   
   const route = useRoute();
   const formConfig = ref(null);
@@ -96,7 +98,8 @@
     const payload = {
       form_id: formConfig.value.formId,
       submitted_at: new Date().toISOString(),
-      data: formData.value
+      data: formData.value,
+      steamId: currentUserSteamId.value
     };
   
     try {
