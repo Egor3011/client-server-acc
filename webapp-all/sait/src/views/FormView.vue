@@ -63,7 +63,7 @@
   </template>
   
   <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, inject } from 'vue';
   import { useRoute } from 'vue-router';
 
   const currentUserSteamId = inject('currentUserSteamId', ref(null))
