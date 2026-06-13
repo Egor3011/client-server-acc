@@ -27,7 +27,7 @@ class TournamentSubmission(BaseModel):
     steamId: str
 
 DB_CONFIG = {
-    "host": "127.0.0.1",
+    "host": "172.19.0.1",
     "user": "admin",
     "password": "30112008mysql",
     "db": "racehub",
