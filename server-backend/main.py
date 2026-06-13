@@ -193,6 +193,6 @@ async def list_players() -> dict[str, Any]:
 app.include_router(event_py.router)
 app.include_router(porsche_cup)
 app.include_router(forms)
-app.add_router(setups_router)
+app.include_router(setups_router)
 
 load_steam_players()
