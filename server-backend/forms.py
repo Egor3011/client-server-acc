@@ -34,7 +34,7 @@ DB_CONFIG = {
     "autocommit": True
 }
 
-@router.post("/pcup-round1", summary="Форма Porsche Cup ROUND 1")
+@router.post("/pcup-round1", summary="Форм Porsche Cup ROUND 1")
 async def post_pcup_round1(submission: TournamentSubmission):
     try:
         # 1. Логирование полученных данных в консоль
