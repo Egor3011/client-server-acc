@@ -64,7 +64,7 @@ async def myposition(steam_id):
         
     with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-    for rider in data["spa"]:
+    for rider in data["monza"]:
         if str(rider["steam_id"]) == myid:
             return rider
     return {}
