@@ -81,7 +81,7 @@
 
   const currentUserSteamId = inject('currentUserSteamId', ref(null))
 
-  const targetDate = new Date(2026, 5, 13, 23, 59, 59); // 10 секунд для теста
+  const targetDate = new Date(2026, 5, 20, 23, 59, 59); // 10 секунд для теста
   const diff = ref(targetDate - Date.now());
   const isTimerOver = ref(false);
   let intervalId = null;
