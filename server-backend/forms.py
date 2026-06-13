@@ -28,7 +28,6 @@ class TournamentSubmission(BaseModel):
 
 DB_CONFIG = {
     "host": "127.0.0.1",
-    "port": 3306,
     "user": "admin",
     "password": "30112008mysql",
     "db": "racehub",
