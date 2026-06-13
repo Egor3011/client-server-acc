@@ -37,7 +37,7 @@ onMounted(() => {
 })
 
 router.afterEach((to) => {
-  document.title = to.meta.title || 'Мой Сайт';
+  document.title = (to.meta.title as string) || 'Мой Сайт';
 });
 
 provide('currentUserSteamId', steamId)
