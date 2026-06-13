@@ -62,14 +62,13 @@ async def post_pcup_round1(submission: TournamentSubmission):
         try:
             async with conn.cursor() as cursor:
                 sql = """
-                    INSERT INTO forms (form_id, data, steamId, userid, submitted_at)
-                    VALUES (%s, %s, %s, %s, %s)
+                    INSERT INTO forms (form_id, data, steamId, submitted_at)
+                    VALUES (%s, %s, %s, %s)
                 """
                 values = (
                     submission.form_id,
                     data_json_str,
                     submission.steamId,
-                    submission.userid,
                     formatted_date
                 )
                 await cursor.execute(sql, values)
