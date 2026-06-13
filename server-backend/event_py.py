@@ -53,7 +53,7 @@ async def get_leaderboard():
         
     with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-    return data["spa"][:150]
+    return data["monza"][:150]
 
 
 @router.get("/myposition")
