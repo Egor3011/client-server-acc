@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, provide } from 'vue'
+import { useRouter } from 'vue-router'
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
 const steamId = ref<string | null>(null)
 
+const router = useRouter()
 
 const steamLoginUrl = computed(() => {
   if (typeof window === 'undefined') return '#'
@@ -33,6 +35,10 @@ onMounted(() => {
     window.history.replaceState({}, '', cleanUrl)
   }
 })
+
+router.afterEach((to) => {
+  document.title = to.meta.title || 'Мой Сайт';
+});
 
 provide('currentUserSteamId', steamId)
 </script>
