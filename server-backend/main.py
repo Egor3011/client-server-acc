@@ -21,6 +21,8 @@ import event_py
 from porsche_cup_router import router as porsche_cup
 from forms import router as forms
 
+from setups import router as setups_router
+
 from fastapi import FastAPI, Request, UploadFile, File, Form, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -191,5 +193,6 @@ async def list_players() -> dict[str, Any]:
 app.include_router(event_py.router)
 app.include_router(porsche_cup)
 app.include_router(forms)
+app.add_router(setups_router)
 
 load_steam_players()

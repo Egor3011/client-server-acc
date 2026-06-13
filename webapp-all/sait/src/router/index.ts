@@ -48,6 +48,13 @@ const router = createRouter({
       component: () => import('../views/EventWeekView.vue'),
       meta: { title: 'Недельный ивент' }
     },
+    {
+      path: '/setups',
+      name: 'setups',
+      // @ts-ignore
+      component: () => import('../views/SetupsView.vue'),
+      meta: { title: 'Car setups' }
+    },
 
 
 
