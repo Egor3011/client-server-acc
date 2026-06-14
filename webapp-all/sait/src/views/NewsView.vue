@@ -13,7 +13,7 @@
         <p class="meta">{{ item.date }} • {{ item.category }}</p>
         <h3>{{ item.title }}</h3>
         <p>{{ item.excerpt }}</p>
-        <a href="#" @click.prevent>Read more</a>
+        <a :href="item.href" target="_blank" rel="noopener noreferrer">Read more</a>
       </article>
     </div>
   </section>
@@ -26,6 +26,7 @@ const news = [
     date: '27 MAY 2026',
     category: 'Porsche Cup',
     title: 'Monza sprint weekend расписан на три заезда',
+    href: "http://race-hub.ru/pdf/Reglament_PorscheCup-ROUND1.pdf",
     excerpt: 'Обновлен формат этапа: квалификация + 2 спринта + суперфинал с реверсом топ-10.',
   },
   {
@@ -33,6 +34,7 @@ const news = [
     date: '25 MAY 2026',
     category: 'Server Update',
     title: 'Новая система live-конфигов внедрена на боевых инстансах',
+    href: "http://race-hub.ru/new/Porsche-Cup",
     excerpt: 'Теперь JSON-конфиги применяются в реальном времени из панели управления без ручного деплоя.',
   },
   {
@@ -40,6 +42,7 @@ const news = [
     date: '22 MAY 2026',
     category: 'Endurance',
     title: 'Открыта регистрация на 3-часовую гонку в Spa',
+    href: "http://race-hub.ru/new/Porsche-Cup",
     excerpt: 'Прием заявок до пятницы. Для участия нужны 2 пилота и стабильный рейтинг безопасности.',
   },
   {
@@ -47,6 +50,7 @@ const news = [
     date: '20 MAY 2026',
     category: 'Rules',
     title: 'Обновлены правила pit-window и штрафов за лимиты трассы',
+    href: "http://race-hub.ru/new/Porsche-Cup",
     excerpt: 'Новый регламент вступает в силу с этапа Barcelona-Catalunya.',
   },
 ]

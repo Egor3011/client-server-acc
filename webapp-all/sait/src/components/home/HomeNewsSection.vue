@@ -8,17 +8,20 @@
       </header>
 
       <div class="news-grid">
-        <article
+        <a
           v-for="item in news"
           :key="item.id"
           class="news-tile"
           :style="{ backgroundImage: `url(${item.image})` }"
+          :href="item.href"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <div class="overlay">
             <p class="meta">{{ item.date }}</p>
             <h4>{{ item.title }}</h4>
           </div>
-        </article>
+        </a>
       </div>
     </div>
   </section>
@@ -28,29 +31,33 @@
 const news = [
   {
     id: 1,
-    title: 'Porsche Cup: обновлен регламент Sprint Weekend',
-    date: '28 MAY 2026',
+    title: 'Porsche Cup: обновлен регламент участия в турнире',
+    date: '15 JUN 2026',
+    href: "http://race-hub.ru/pdf/Reglament_PorscheCup-ROUND1.pdf",
     image:
       'https://i.pinimg.com/1200x/d7/84/78/d784789e23bd5705af81c8c0ee90a7f1.jpg',
   },
   {
     id: 2,
-    title: 'Monza: открыта регистрация на этап GT3 Pro',
-    date: '27 MAY 2026',
+    title: 'ROUND 1: открыта регистрация на этап Porsche Cup',
+    date: '14 JUN 2026',
+    href: "http://race-hub.ru/form/pcup-round1",
     image:
       'https://i.pinimg.com/1200x/ca/b2/f0/cab2f03dbdf96ecc44af03caa3ebb535.jpg',
   },
   {
     id: 3,
-    title: 'Endurance Spa: опубликованы составы команд',
-    date: '26 MAY 2026',
+    title: 'Добавлена страница с готовыми настройками машин',
+    date: '11 JUN 2026',
+    href: "http://race-hub.ru/setups",
     image:
-      'https://i.pinimg.com/736x/d5/17/cc/d517cc69456c0a443ffbaf772c7cd303.jpg',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfhXT0l4Xz3qFuqQMmmPS27yaQQUdlKmMx8bA1Kbh2hAqEoE9vzVCMq_zF&s=10',
   },
   {
     id: 4,
     title: 'Server update: ускорена синхронизация конфигов',
-    date: '24 MAY 2026',
+    date: '4 JUN 2026',
+    href: "#",
     image:
       'https://i.pinimg.com/736x/d0/24/c4/d024c4f16e5954aecf7adb707c6ca2f2.jpg',
   },
