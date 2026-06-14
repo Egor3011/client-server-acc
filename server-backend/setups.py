@@ -1,18 +1,18 @@
 from fastapi import APIRouter, HTTPException, Query, status
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 from typing import List, Optional
 import aiomysql
 
 router = APIRouter(prefix="/setups", tags=["Setups Search Router"])
 
-# 1. Схема ответа для фронтенда (что вернет API)
+# 1. Схема ответа для фронтенда
 class SetupResponse(BaseModel):
     id: int
     car_model: str = Field(..., examples=["Porsche 911 GT3 Cup (992)"])
     track_map: str = Field(..., examples=["Monza"])
     setup_url: str = Field(..., examples=["/files/porsche_monza.pdf"])
     lap_time: Optional[str] = Field(None, examples=["1:47.234"])
-    creator_nickname: str = Field(..., examples=["JohnDoe"])
+    creator_nickname: str = Field(..., default="Система", examples=["JohnDoe"])
     creator_url: Optional[str] = Field(None, examples=["https://steamcommunity.com"])
     description: Optional[str] = Field(None, examples=["Агрессивный сетап для квалификации"])
 
@@ -25,26 +25,35 @@ DB_CONFIG = {
     "autocommit": True
 }
 
-async def get_db_pool():
-    return await aiomysql.create_pool(**DB_CONFIG)
-
-# 2. Эндпоинт поиска сетапов
+# 2. Эндпоинт поиска сетапов (Оптимизированный)
 @router.get("/search", response_model=List[SetupResponse])
 async def search_car_setups(
     car_model: Optional[str] = Query(None, description="Поиск по названию/модели автомобиля"),
     track_map: Optional[str] = Query(None, description="Поиск по названию карты/трека")
 ):
-    pool = await get_db_pool()
+    # Используем прямое асинхронное подключение, чтобы не плодить пулы на каждый запрос
+    conn = await aiomysql.connect(**DB_CONFIG)
     
-    async with pool.acquire() as conn:
-        # DictCursor автоматически соберет строки в словари со свойствами как имена колонок в БД
+    try:
         async with conn.cursor(aiomysql.DictCursor) as cur:
-            
-            # Базовый SQL запрос к таблице setaps
-            query = "SELECT id, car_model, track_map, setup_url, description FROM setaps WHERE 1=1"
+            # ВАЖНО: Добавили пустые значения для полей lap_time, creator_nickname, creator_url,
+            # чтобы они соответствовали схеме SetupResponse и не вызывали ошибку валидации.
+            query = """
+                SELECT 
+                    id, 
+                    car_model, 
+                    track_map, 
+                    setup_url, 
+                    description,
+                    NULL AS lap_time,
+                    'Система' AS creator_nickname,
+                    NULL AS creator_url
+                FROM setaps 
+                WHERE 1=1
+            """
             params = []
             
-            # Фильтр по модели машины (частичное совпадение LIKE)
+            # Фильтр по модели машины
             if car_model:
                 query += " AND car_model LIKE %s"
                 params.append(f"%{car_model}%")
@@ -54,19 +63,15 @@ async def search_car_setups(
                 query += " AND track_map LIKE %s"
                 params.append(f"%{track_map}%")
                 
-            try:
-                await cur.execute(query, params)
-                rows = await cur.fetchall()
+            await cur.execute(query, params)
+            rows = await cur.fetchall()
+            return rows
                 
-                # Возвращаем массив словарей. FastAPI автоматически провалидирует 
-                # их через схему `SetupResponse` и преобразует в JSON
-                return rows
-                
-            except Exception as e:
-                raise HTTPException(
-                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                    detail=f"Ошибка базы данных: {str(e)}"
-                )
-            finally:
-                pool.close()
-                await pool.wait_closed()
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Ошибка базы данных: {str(e)}"
+        )
+    finally:
+        # Гарантированно закрываем соединение после генерации ответа
+        conn.close()
