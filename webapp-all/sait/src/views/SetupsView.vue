@@ -99,12 +99,11 @@
 
   /* Минималистичные стили в темных тонах */
   .app-container {
-    max-width: 900px;
     margin: 0 auto;
     padding: 40px 20px;
     font-family: "Formula1", -apple-system, Helvetica, Arial, sans-serif;
     color: #e0e0e0;
-    background-color: #121212;
+    background: none;
     min-height: 100vh;
   }
   
