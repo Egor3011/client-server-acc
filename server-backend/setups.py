@@ -47,8 +47,8 @@ async def search_car_setups(
                     track_map, 
                     setup_url, 
                     description,
-                    NULL AS lap_time,
-                    'Система' AS creator_nickname,
+                    lap_time,
+                    creator_nickname,
                     NULL AS creator_url
                 FROM setaps 
                 WHERE 1=1
