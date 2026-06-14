@@ -48,7 +48,7 @@
             
             <!-- Открытие чистого PDF в новой вкладке -->
             <a :href="setup.setup_url" target="_blank" class="btn-primary">
-              Открыть PDF
+              Download
             </a>
           </div>
         </div>
