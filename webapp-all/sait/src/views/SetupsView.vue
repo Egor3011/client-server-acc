@@ -160,98 +160,114 @@
     color: #ff5252;
   }
   
-  /* Сетка карточек */
+  /* Сетка карточек: изменена с flex-column на адаптивный grid */
+.setups-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Ровно две колонки в ряд */
+  gap: 16px;
+}
+
+.setup-card {
+  background-color: #1e1e1e;
+  border: 1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column; /* Позволяет прижать футер к низу карточки */
+  justify-content: space-between; /* Выравнивает контент, если описания разной длины */
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.setup-card:hover {
+  border-color: #444;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.track {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #00e676;
+  font-weight: 600;
+}
+
+.time {
+  font-family: "Formula1";
+  background: #2d2d2d;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.car-title {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.description {
+  color: #aaa;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+  flex-grow: 1; /* Растягивает блок текста, удерживая футеры на одной линии */
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #2d2d2d;
+  padding-top: 16px;
+  font-size: 0.9rem;
+  margin-top: auto; /* Жестко фиксирует футер внизу карточки */
+}
+
+.creator {
+  color: #888;
+}
+
+.link {
+  color: #4fc3f7;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Кнопка открытия PDF */
+.btn-primary {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #e0e0e0;
+}
+
+/* Адаптивность: на смартфонах (экран меньше 768px) карточки встанут по одной в ряд */
+@media (max-width: 768px) {
   .setups-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    grid-template-columns: 1fr;
   }
-  
-  .setup-card {
-    background-color: #1e1e1e;
-    border: 1px solid #2d2d2d;
-    border-radius: 8px;
-    padding: 24px;
-    transition: transform 0.2s, border-color 0.2s;
+  .search-box {
+    flex-direction: column; /* Поля фильтров на мобилках тоже встанут друг под друга */
   }
-  
-  .setup-card:hover {
-    border-color: #444;
-  }
-  
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  
-  .track {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #00e676;
-    font-weight: 600;
-  }
-  
-  .time {
-    font-family: "Formula1";
-    background: #2d2d2d;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    color: #fff;
-  }
-  
-  .car-title {
-    margin: 0 0 12px 0;
-    font-size: 1.3rem;
-    color: #fff;
-  }
-  
-  .description {
-    color: #aaa;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0 0 20px 0;
-  }
-  
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid #2d2d2d;
-    padding-top: 16px;
-    font-size: 0.9rem;
-  }
-  
-  .creator {
-    color: #888;
-  }
-  
-  .link {
-    color: #4fc3f7;
-    text-decoration: none;
-  }
-  
-  .link:hover {
-    text-decoration: underline;
-  }
-  
-  /* Кнопка открытия PDF */
-  .btn-primary {
-    display: inline-block;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.2s;
-  }
-  
-  .btn-primary:hover {
-    background-color: #e0e0e0;
-  }
+}
+
   </style>
   
