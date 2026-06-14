@@ -8,13 +8,15 @@ router = APIRouter(prefix="/setups", tags=["Setups Search Router"])
 # 1. Схема ответа для фронтенда
 class SetupResponse(BaseModel):
     id: int
-    car_model: str = Field(..., examples=["Porsche 911 GT3 Cup (992)"])
-    track_map: str = Field(..., examples=["Monza"])
-    setup_url: str = Field(..., examples=["/files/porsche_monza.pdf"])
-    lap_time: Optional[str] = Field(None, examples=["1:47.234"])
-    creator_nickname: str = Field(..., default="Система", examples=["JohnDoe"])
-    creator_url: Optional[str] = Field(None, examples=["https://steamcommunity.com"])
-    description: Optional[str] = Field(None, examples=["Агрессивный сетап для квалификации"])
+    car_model: str = Field(description="Porsche 911 GT3 Cup (992)", examples=["Porsche 911 GT3 Cup (992)"])
+    track_map: str = Field(description="Monza", examples=["Monza"])
+    setup_url: str = Field(description="/files/porsche_monza.pdf", examples=["/files/porsche_monza.pdf"])
+    lap_time: Optional[str] = Field(default=None, examples=["1:47.234"])
+    # Убрали три точки, оставили только дефолтное значение "Система"
+    creator_nickname: str = Field(default="Система", examples=["JohnDoe"])
+    creator_url: Optional[str] = Field(default=None, examples=["https://steamcommunity.com"])
+    description: Optional[str] = Field(default=None, examples=["Агрессивный сетап для квалификации"])
+
 
 # Конфигурация подключения к БД
 DB_CONFIG = {
