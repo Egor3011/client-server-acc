@@ -37,7 +37,7 @@
       <!-- ╔══════════════════════════════════════════════════════╗ -->
       <!-- ║  RACES LIST                                         ║ -->
       <!-- ╚══════════════════════════════════════════════════════╝ -->
-      <a href="/pdf/pcup-222.pdf" target="_blank">Открыть PDF</a>
+      <a href="/pdf/Reglament_PorscheCup-ROUND1.pdf" target="_blank">Регламент турнира</a>
 
       <section class="section races-section">
         <h2 class="section__title">Предстоящие заезды</h2>
