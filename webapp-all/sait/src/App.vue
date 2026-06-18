@@ -49,7 +49,7 @@ provide('currentUserSteamId', steamId)
 
     <!-- 1. Ваша новая плашка (инлайновые стили) -->
       <div style="background-color: #ff4757; color: #ffffff; text-align: center; padding: 10px 0; font-family: sans-serif;">
-        <p style="margin: 0; font-weight: 500;">Porsche Cup отменен и заменен на GT3 AM <a href="http://localhost:5173/gt3-am" style="color: #ffffff; font-weight: bold;">Подробнее</a></p>
+        <p style="margin: 0; font-weight: 500;">Porsche Cup отменен и заменен на GT3 AM <a href="http://race-hub.ru/gt3-am" style="color: #ffffff; font-weight: bold;">Подробнее</a></p>
       </div>
       <header class="top-header">
         <div class="brand">
