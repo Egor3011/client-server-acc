@@ -55,7 +55,13 @@ const router = createRouter({
       component: () => import('../views/SetupsView.vue'),
       meta: { title: 'Car setups' }
     },
-
+    {
+      path: '/me',
+      name: 'me',
+      // @ts-ignore
+      component: () => import('../views/UserProfileView.vue'),
+      meta: { title: 'My profile' }
+    },
 
 
     {

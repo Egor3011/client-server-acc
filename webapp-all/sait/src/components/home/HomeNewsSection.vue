@@ -31,6 +31,14 @@
 const news = [
   {
     id: 1,
+    title: 'Porsche Cup: отменен и заменен на GT3-AM',
+    date: '19 JUN 2026',
+    href: "/gt3-am",
+    image:
+      'https://coachdaveacademy.com/wp-content/uploads/2023/06/iRacing-Motorsport-Simulator-Screenshot-2024.06.14-12.58.53.26-scaled.jpg',
+  },
+  {
+    id: 2,
     title: 'Porsche Cup: обновлен регламент участия в турнире',
     date: '15 JUN 2026',
     href: "http://race-hub.ru/pdf/Reglament_PorscheCup-ROUND1.pdf",
@@ -38,7 +46,7 @@ const news = [
       'https://i.pinimg.com/1200x/d7/84/78/d784789e23bd5705af81c8c0ee90a7f1.jpg',
   },
   {
-    id: 2,
+    id: 3,
     title: 'ROUND 1: открыта регистрация на этап Porsche Cup',
     date: '14 JUN 2026',
     href: "http://race-hub.ru/form/pcup-round1",
@@ -46,20 +54,12 @@ const news = [
       'https://i.pinimg.com/1200x/ca/b2/f0/cab2f03dbdf96ecc44af03caa3ebb535.jpg',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Добавлена страница с готовыми настройками машин',
     date: '11 JUN 2026',
     href: "http://race-hub.ru/setups",
     image:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfhXT0l4Xz3qFuqQMmmPS27yaQQUdlKmMx8bA1Kbh2hAqEoE9vzVCMq_zF&s=10',
-  },
-  {
-    id: 4,
-    title: 'Server update: ускорена синхронизация конфигов',
-    date: '4 JUN 2026',
-    href: "#",
-    image:
-      'https://i.pinimg.com/736x/d0/24/c4/d024c4f16e5954aecf7adb707c6ca2f2.jpg',
   },
 ]
 </script>
