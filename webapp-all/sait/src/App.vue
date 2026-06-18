@@ -45,31 +45,38 @@ provide('currentUserSteamId', steamId)
 
 <template>
   <div class="app-shell">
-    <header class="top-header">
-      <div class="brand">
-        <span class="brand-accent" />
-        <div class="brand-text">
-          <strong>RACE-hub</strong>
-          <small>GT Series</small>
+    <div style="position: sticky; top: 0; z-index: 20;">
+
+    <!-- 1. Ваша новая плашка (инлайновые стили) -->
+      <div style="background-color: #ff4757; color: #ffffff; text-align: center; padding: 10px 0; font-family: sans-serif;">
+        <p style="margin: 0; font-weight: 500;">Porsche Cup отменен и заменен на GT3 AM <a href="http://localhost:5173/gt3-am" style="color: #ffffff; font-weight: bold;">Подробнее</a></p>
+      </div>
+      <header class="top-header">
+        <div class="brand">
+          <span class="brand-accent" />
+          <div class="brand-text">
+            <strong>RACE-hub</strong>
+            <small>GT Series</small>
+          </div>
         </div>
-      </div>
 
-      <nav class="main-nav">
-        <RouterLink to="/" active-class="active">Home</RouterLink>
-        <RouterLink to="/news" active-class="active">News</RouterLink>
-        <RouterLink to="/help" active-class="active">Help</RouterLink>
-        <RouterLink to="/setups" active-class="active">Setups</RouterLink>
-        <RouterLink to="/dc" style="background: #5865f2;" active-class="active">Discord</RouterLink>
-      </nav>
+        <nav class="main-nav">
+          <RouterLink to="/" active-class="active">Home</RouterLink>
+          <RouterLink to="/news" active-class="active">News</RouterLink>
+          <RouterLink to="/help" active-class="active">Help</RouterLink>
+          <RouterLink to="/setups" active-class="active">Setups</RouterLink>
+          <RouterLink to="/dc" style="background: #5865f2;" active-class="active">Discord</RouterLink>
+        </nav>
 
-      <div class="auth-panel">
-        <a v-if="!steamId" class="auth-button" :href="steamLoginUrl">Sign in with Steam</a>
-        <template v-else>
-          <span class="steam-id">Steam ID: {{ steamId }}</span>
-          <button class="auth-button ghost" @click="clearSteamAuth">Logout</button>
-        </template>
-      </div>
-    </header>
+        <div class="auth-panel">
+          <a v-if="!steamId" class="auth-button" :href="steamLoginUrl">Sign in with Steam</a>
+          <template v-else>
+            <span class="steam-id">Steam ID: {{ steamId }}</span>
+            <button class="auth-button ghost" @click="clearSteamAuth">Logout</button>
+          </template>
+        </div>
+      </header>
+    </div>
 
     <main class="page-content">
       <RouterView v-slot="{ Component, route }">
@@ -87,10 +94,8 @@ provide('currentUserSteamId', steamId)
 }
 
 .top-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: rgba(14, 16, 22, 0.88);
+  position: static; /* Убираем индивидуальную липкость */
+  /* Все остальные ваши стили (background, display: grid и т.д.) остаются без изменений */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   display: grid;
@@ -99,6 +104,7 @@ provide('currentUserSteamId', steamId)
   gap: 24px;
   padding: 14px 22px;
 }
+
 
 .brand {
   display: flex;
