@@ -1,4 +1,16 @@
 <template>
+    <div v-if="!currentUserSteamId" class="auth-alert-banner">
+      <span style="font-weight: 500;">Вы не авторизованы! Форма не отправится, пока вы не войдете в систему.</span>
+      <a 
+        :href="steamLoginUrl"
+        style="background-color: #1b2838; color: #ffffff; border: 1px solid #c7d5e0; padding: 6px 14px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: background 0.2s;"
+        onmouseover="this.style.background='#2a475e'"
+        onmouseout="this.style.background='#1b2838'"
+      >
+        Login
+      </a>
+    </div>
+
     <div class="form-wrapper pattern-backdrop" v-if="formConfig">
       <h2 style="margin-bottom: 30px;">{{ formConfig.formTitle }}</h2>
       
@@ -63,10 +75,12 @@
   </template>
   
   <script setup>
-  import { ref, onMounted, inject } from 'vue';
+  import { ref, onMounted, inject, computed } from 'vue';
   import { useRoute } from 'vue-router';
 
   const currentUserSteamId = inject('currentUserSteamId', ref(null))
+
+  const steamLoginUrl = inject('steamLoginUrl')
   
   const route = useRoute();
   const formConfig = ref(null);
@@ -77,6 +91,13 @@
   const S3_BUCKET_URL = 'https://racehub.s3.cloud.ru/forms';
   
   onMounted(async () => {
+    console.log('Текущий Steam ID:', currentUserSteamId.value)
+  
+    if (currentUserSteamId.value == null) {
+      console.log('Пользователь не авторизован, вызываем steamLoginUrl...')
+      window.open(steamLoginUrl.value)
+      
+    }
     const formId = route.params.id;
     try {
       const response = await fetch(`${S3_BUCKET_URL}/${formId}.json`);
@@ -169,5 +190,57 @@
   .send-button {
     font-weight: 700;
   }
+
+
+  .auth-alert-banner {
+  max-width: 500px;         /* Точно такая же ширина, как у .form-wrapper */
+  margin: 0 auto 20px auto; /* Центрирование и отступ 20px снизу до формы */
+  padding: 15px 20px;
+  background-color: #ff4757;
+  color: #ffffff;
+  border-radius: 12px;      /* Скругление как у вашей формы */
+  font-family: "Titillium Web", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;   /* На мобильных элементы встанут друг под друга */
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Кнопка внутри плашки */
+.auth-alert-button {
+  background-color: #1b2838;
+  color: #ffffff;
+  border: 1px solid #c7d5e0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 100%;             /* Кнопка на всю ширину на мобильных */
+  max-width: 180px;        /* Ограничение ширины на десктопе */
+}
+
+.auth-alert-button:hover {
+  background-color: #2a475e;
+}
+
+.auth-alert-button:active {
+  transform: scale(0.98);
+}
+
+/* Медиа-запрос для красивого отображения на больших экранах */
+@media (min-width: 480px) {
+  .auth-alert-banner {
+    flex-direction: row;    /* Текст и кнопка встают в одну строку */
+    justify-content: space-between;
+    text-align: left;
+  }
+  .auth-alert-button {
+    width: auto;            /* Кнопка сжимается под свой контент */
+  }
+}
+
   </style>
   

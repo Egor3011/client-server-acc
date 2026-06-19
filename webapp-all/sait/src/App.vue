@@ -41,6 +41,7 @@ router.afterEach((to) => {
 });
 
 provide('currentUserSteamId', steamId)
+provide('steamLoginUrl', steamLoginUrl)
 </script>
 
 <template>
