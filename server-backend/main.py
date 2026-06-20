@@ -17,6 +17,7 @@ print("--------------------------------")
 # Принудительный абсолютный импорт
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import leaderboards
 import event_py
 from porsche_cup_router import router as porsche_cup
 from forms import router as forms
@@ -194,5 +195,6 @@ app.include_router(event_py.router)
 app.include_router(porsche_cup)
 app.include_router(forms)
 app.include_router(setups_router)
+app.include_router(leaderboards.router)
 
 load_steam_players()

@@ -12,7 +12,8 @@ const calendar = ref([
     time: '19:00', 
     participants: 18, 
     format: '45 минут (1 обязательный пит-стоп)', 
-    active: true 
+    active:  false,
+    past: true
   },
   { 
     id: 2, 
@@ -22,8 +23,8 @@ const calendar = ref([
     date: '21.06.2025', 
     time: '19:30', 
     participants: 20, 
-    format: '90 минут (Ночь, х2 износ)', 
-    active: false 
+    format: '45 минут (1 обязательный пит-стоп, ночь, х2 износ)', 
+    active: true 
   },
   { 
     id: 3, 
@@ -119,13 +120,67 @@ const countdown = ref({
 
 let timerInterval = null
 
+
+
+const leaders = ref([
+    {
+        "rank": 1,
+        "username": "Meyirim Shyn",
+        "score": 25
+    },
+    {
+        "rank": 2,
+        "username": "Gleb Stat1covich",
+        "score": 18
+    },
+    {
+        "rank": 3,
+        "username": "Egor Aksenov",
+        "score": 15
+    },
+    {
+        "rank": 4,
+        "username": "Павел Евдокимов",
+        "score": 12
+    },
+    {
+        "rank": 5,
+        "username": "Денис Голубев",
+        "score": 10
+    }
+])
+const loading = ref(true)
+const error = ref(null)
+
+
+const fetchLeaders = async () => {
+  try {
+    loading.value = true
+    error.value = null
+    
+    // Замените URL на ваш адрес FastAPI, если он отличается
+    const response = await fetch('/api/gt3-am/leaders')
+    
+    if (!response.ok) {
+      throw new Error('Не удалось загрузить данные')
+    }
+    
+    leaders.value = await response.json()
+  } catch (err) {
+    error.value = err.message || 'Произошла ошибка при подключении к серверу'
+  } finally {
+    loading.value = false
+  }
+}
+
+
 // Вспомогательная функция форматирования чисел
 const formatNum = (num) => {
   return num < 10 ? '0' + num : String(num)
 }
 
 const updateCountdown = () => {
-  const targetDate = new Date('2026-06-19T19:00:00+03:00').getTime() 
+  const targetDate = new Date('2026-06-21T19:30:00+03:00').getTime() 
   const now = new Date().getTime()
   const difference = targetDate - now
 
@@ -149,6 +204,7 @@ const updateCountdown = () => {
 }
 
 onMounted(() => {
+  fetchLeaders()
   updateCountdown()
   timerInterval = setInterval(updateCountdown, 1000)
 })
@@ -168,7 +224,7 @@ onUnmounted(() => {
         
         <!-- Блок таймера обратного отсчета -->
         <div class="countdown-wrapper">
-          <span class="countdown-label">До старта Сезона осталось:</span>
+          <span class="countdown-label">До старта 2 раунда осталось:</span>
           <div class="countdown-tiles">
             <div class="tile"><span class="num">{{ countdown.days }}</span><span class="lbl">дн</span></div>
             <div class="tile-divider">:</div>
@@ -214,6 +270,43 @@ onUnmounted(() => {
       </div>
     </section>
 
+    <section class="container section">
+      <div class="section-header">
+        <span class="section-tag">Очки участников</span>
+        <h2>ЛИДЕРБОАРД</h2>
+      </div>
+      <div class="leaderboard-container">
+
+        <!-- Индикатор загрузки -->
+        <div v-if="loading" class="loading">Загрузка данных...</div>
+
+        <!-- Вывод ошибки -->
+        <div v-else-if="error" class="error">{{ error }}</div>
+
+        <!-- Таблица лидеров -->
+        <table v-else class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Место</th>
+              <th>№</th> <!-- Новая колонка для номера авто -->
+              <th>Пилот</th>
+              <th>Болид</th> <!-- Новая колонка для модели авто -->
+              <th>Очки</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="leader in leaders" :key="leader.rank" :class="{ 'top-three': leader.rank <= 3 }">
+              <td>{{ leader.rank }}</td>
+              <td class="car-number">#{{ leader.car_number }}</td> <!-- Выводим номер -->
+              <td>{{ leader.username }}</td>
+              <td class="car-model">{{ leader.car_model }}</td> <!-- Выводим модель -->
+              <td class="score">{{ leader.score }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <!-- Календарь -->
     <section id="calendar" class="container section">
       <div class="section-header">
@@ -223,7 +316,7 @@ onUnmounted(() => {
       <div class="grid-calendar">
         <div v-for="race in calendar" :key="race.stage" 
              class="card-stage"
-             :class="{ 'active-stage': race.active }">
+             :class="{ 'active-stage': race.active, 'past-stage': race.past }">
           <div class="stage-top">
             <span class="stage-num">Этап {{ race.stage }}</span>
             <span class="stage-date">{{ race.date }}</span>
@@ -233,6 +326,7 @@ onUnmounted(() => {
           <div v-if="race.active" class="live-dot"></div>
         </div>
       </div>
+      <a href="https://racehub.s3.cloud.ru/GT3 Am Summer - Replay.zip" class="btn btn-primary btn-large" style="margin-top: 40px;">Скачать повторы гонок</a>
     </section>
 
     <!-- Расписание дня -->
@@ -601,6 +695,31 @@ onUnmounted(() => {
   border-color: var(--border-hover);
 }
 
+
+/* ПРОШЕДШЕЕ СОБЫТИЕ */
+/* ПРОШЕДШЕЕ СОБЫТИЕ */
+/* ПРОШЕДШЕЕ СОБЫТИЕ */
+.card-stage.past-stage {
+  opacity: 0.6; /* Размываем карточку, делая её фоновой */
+  filter: grayscale(100%); /* Полностью убираем цвета, если они были */
+  border: 1px dashed #444444; /* Делаем границу пунктирной */
+  pointer-events: none; /* Отключаем клики и hover-эффекты на карточке */
+}
+
+/* Дополнительно: можно зачеркнуть название трассы */
+.past-stage .stage-track {
+  text-decoration: line-through;
+  color: #888888;
+}
+
+/* Меняем цвет номера этапа на тусклый */
+.past-stage .stage-num {
+  color: #666666;
+}
+/* ПРОШЕДШЕЕ СОБЫТИЕ */
+/* ПРОШЕДШЕЕ СОБЫТИЕ */
+/* ПРОШЕДШЕЕ СОБЫТИЕ */
+
 .stage-top {
   display: flex;
   justify-content: space-between;
@@ -955,6 +1074,120 @@ onUnmounted(() => {
   font-weight: 700;
   color: #52525b;                /* Темно-серый цвет */
   padding-bottom: 4px;
+}
+
+.leaderboard-container {
+  max-width: 800px;
+  margin: 20px auto;
+  font-family: "Formula1", Arial, sans-serif;
+  background-color: none;
+  padding: 10px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid rgba(255, 255, 255, 0.14); /* Жесткая белая рамка */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+th, td {
+  padding: 14px 15px;
+  text-align: left;
+  font-family: "Formula1", Arial, Helvetica, sans-serif;
+}
+
+th {
+  color: #ffffff; /* Черный текст в шапке */
+  font-weight: 900;
+}
+
+/* Нечетные строки: черный фон, белый текст */
+tr {
+  border-bottom: 1px solid #222222;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Четные строки: темно-серый/черный для монохрома */
+tr:nth-of-type(even) {
+  background-color: #111111;
+}
+
+/* Эффект наведения в стиле ЧБ */
+tr:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+tr:hover td {
+  color: #000000 !important;
+}
+tr:hover .score {
+  color: #000000 !important;
+}
+
+/* Все ячейки по умолчанию наследуют цвет строки */
+td {
+  color: inherit;
+}
+
+/* Монохромная стилизация топ-3 мест (без золота/серебра) */
+.top-three {
+  font-weight: bold;
+}
+
+/* Выделение мест рамками или инверсией вместо цвета */
+tr:nth-of-type(1) td:first-child { font-size: 18px; font-weight: 900; color: #ffffff; } 
+tr:nth-of-type(2) td:first-child { font-size: 16px; font-weight: bold; color: #cccccc; } 
+tr:nth-of-type(3) td:first-child { font-size: 15px; font-weight: bold; color: #aaaaaa; } 
+
+/* Очки в ЧБ стиле */
+.score {
+  color: #ffffff;
+  font-weight: 900;
+  text-align: right; /* Выравнивание очков по правому краю смотрится аккуратнее */
+}
+
+
+.car-number {
+  font-weight: 900;
+  color: #ffffff;
+  width: 50px; /* Фиксированная ширина для номера */
+}
+
+.car-model {
+  color: #888888; /* Серый цвет для модели, чтобы не отвлекать от ника */
+  font-size: 13px;
+}
+
+/* Изменяем поведение при наведении, чтобы модель тоже становилась контрастной */
+tr:hover .car-model {
+  color: #000000 !important;
+}
+
+/* Корректируем выравнивание последней колонки очков */
+th:last-child, td:last-child {
+  text-align: right;
+}
+
+/* Состояния загрузки и ошибок */
+.loading, .error {
+  text-align: center;
+  padding: 30px;
+  font-family: "Formula1", Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  background-color: #000000;
+}
+
+.loading {
+  color: #ffffff;
+}
+
+.error {
+  color: #ffffff;
+  border: 1px dashed #ffffff;
 }
 
 </style>
