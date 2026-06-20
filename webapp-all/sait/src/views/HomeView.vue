@@ -31,12 +31,12 @@ const error = ref('')
 
 const upcomingEvents = [
   { id: 1, round: 'ROUND 1', 
-  image: 'https://racehub.s3.cloud.ru/p1.jpg',
-  imagemap: 'https://racehub.s3.cloud.ru/monza-map2',
+  image: 'https://coachdaveacademy.com/wp-content/uploads/2023/06/iRacing-Motorsport-Simulator-Screenshot-2024.06.14-12.58.53.26-scaled.jpg',
+  imagemap: 'https://racehub.s3.cloud.ru/spa-map',
   title: 'GT3 AM Summer', 
   date: '19 JUN - 4 JUL 2026', 
   location: '8 TRACKS', 
-  series: 'RACE',
+  series: 'Tournament',
   href: "http://race-hub.ru/new/gt3-am"},
   { id: 2, image: 'https://i.pinimg.com/1200x/4b/e5/5a/4be55a994de3744883a15138a217fc15.jpg',
   imagemap: 'https://racehub.s3.cloud.ru/spa-map',
@@ -45,10 +45,10 @@ const upcomingEvents = [
 ]
 
 const categories = [
-  { name: 'Porsche Cup', description: 'One-make sprint races', href: "/porsche-cup" },
-  { name: 'GT3 Pro', description: 'Top split competition', href: "/gt3-pro" },
-  { name: 'GT3 AM', description: 'Gentleman drivers', href: "/gt3-am" },
-  { name: 'Endurance', description: 'Multi-hour team format', href: "/endurance" },
+  { name: 'Porsche Cup', description: 'One-make sprint races', href: "/porsche-cup", is_unactive: true },
+  { name: 'GT3 Pro', description: 'Top split competition', href: "/gt3-pro", is_unactive: true  },
+  { name: 'GT3 AM', description: 'Gentleman drivers', href: "/gt3-am", is_unactive: false  },
+  { name: 'Endurance', description: 'Multi-hour team format', href: "/endurance", is_unactive: true  },
 ]
 
 let refreshTimer: number | undefined

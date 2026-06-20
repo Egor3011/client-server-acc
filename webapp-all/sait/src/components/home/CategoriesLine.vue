@@ -6,12 +6,17 @@
         :key="category.name"
         :href="category.href ?? '#'"
         class="promo-card"
+        :class="{ 'is_unactive': category.is_unactive }"
 
       >
         <span class="promo-inner">
           <div class="promo-content">
             <p class="promo-title">{{ category.name.toUpperCase() }}</p>
-            <span class="promo-description">{{ category.description }}</span>
+            <span 
+              class="promo-description" 
+              >
+              {{ category.description  }}
+            </span>
           </div>
           <span class="promo-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
@@ -30,6 +35,7 @@ type CategoryItem = {
   name: string
   description: string
   href?: string
+  is_unactive: boolean
 }
 
 defineProps<{
@@ -99,5 +105,32 @@ defineProps<{
 .promo-icon svg {
   width: 100%;
   height: 100%;
+}
+
+.promo-card.is_unactive {
+  pointer-events: none; /* Полностью отключает клики, фокус и hover из CSS */
+  cursor: not-allowed;  /* Показывает курсор запрета (на случай если pointer-events включен) */
+  opacity: 0.5;        /* Делает карточку полупрозрачной */
+  background: rgba(10, 11, 15, 0.6); /* Более темный, приглушенный фон */
+  border: 1px dashed rgba(255, 255, 255, 0.2); /* Пунктирная граница вместо сплошной */
+}
+
+/* Отменяем изменение стилей при наведении для неактивной карточки */
+.promo-card.is_unactive:hover {
+  transform: none;
+  background: rgba(10, 11, 15, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px; /* Возвращаем дефолтный радиус */
+}
+
+/* Стилизация текста "СКОРО" под название трека/категории */
+.promo-soon {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-family: 'Formula1', sans-serif;
+  letter-spacing: 0.08em;
+  color: #ff3333; /* Красный гоночный акцент для статуса блокировки */
+  font-weight: bold;
 }
 </style>
