@@ -24,18 +24,19 @@ const calendar = ref([
     time: '19:30', 
     participants: 20, 
     format: '45 минут (1 обязательный пит-стоп, ночь, х2 износ)', 
-    active: true 
+    active:  false,
+    past: true
   },
   { 
     id: 3, 
     stage: 3, 
-    track: 'Silverstone', 
+    track: 'Spa-Francorchamps', 
     image: '/images/tracks/mantorp.jpg', 
     date: '24.06.2025', 
     time: '19:30', 
     participants: 17, 
     format: '2 x 30 минут (Спринт, реверс)', 
-    active: false 
+    active: true 
   },
   { 
     id: 4, 
@@ -73,7 +74,7 @@ const calendar = ref([
   { 
     id: 7, 
     stage: 7, 
-    track: 'Zolder', 
+    track: 'Silverstone', 
     image: '/images/tracks/gotlands.jpg', 
     date: '03.07.2025', 
     time: '19:00', 
@@ -180,7 +181,7 @@ const formatNum = (num) => {
 }
 
 const updateCountdown = () => {
-  const targetDate = new Date('2026-06-21T19:30:00+03:00').getTime() 
+  const targetDate = new Date('2026-06-24T19:00:00+03:00').getTime() 
   const now = new Date().getTime()
   const difference = targetDate - now
 

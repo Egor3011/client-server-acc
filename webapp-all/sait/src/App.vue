@@ -50,7 +50,7 @@ provide('steamLoginUrl', steamLoginUrl)
 
     <!-- 1. Ваша новая плашка (инлайновые стили) -->
       <div style="background-color: #ff4757; color: #ffffff; text-align: center; padding: 10px 0; font-family: sans-serif;">
-        <p style="margin: 0; font-weight: 600;">21 JUN: Прийми участие в GT3 AM Summer <a href="http://race-hub.ru/gt3-am" style="color: #ffffff; font-weight: bold;">Подробнее</a></p>
+        <p style="margin: 0; font-weight: 600;">24 JUN: Прийми участие в GT3 AM Summer<a href="http://race-hub.ru/gt3-am" style="color: #ffffff; font-weight: bold;">Подробнее</a></p>
       </div>
       <header class="top-header">
         <div class="brand">
