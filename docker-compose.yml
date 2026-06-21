@@ -40,3 +40,8 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     networks:
       - dev
+
+# ОБЯЗАТЕЛЬНО ДОБАВЬТЕ ЭТОТ БЛОК В КОНЕЦ ФАЙЛА:
+networks:
+  dev:
+    driver: bridge
