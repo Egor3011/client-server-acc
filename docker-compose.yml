@@ -5,8 +5,6 @@ services:
     container_name: acc-backend
     restart: unless-stopped
     volumes:
-      # Связываем локальную папку на сервере с папкой внутри Docker
-      # ./acc_results — папка создастся прямо рядом с файлом docker-compose.yml
       - ./server-backend/data:/app/data
     ports:
       - "8000:8000"
@@ -36,12 +34,4 @@ services:
       - "443:443"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      # Монтируем системную папку с сертификатами внутрь Nginx
       - /etc/letsencrypt:/etc/letsencrypt:ro
-    networks:
-      - dev
-
-# ОБЯЗАТЕЛЬНО ДОБАВЬТЕ ЭТОТ БЛОК В КОНЕЦ ФАЙЛА:
-networks:
-  dev:
-    driver: bridge
