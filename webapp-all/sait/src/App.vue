@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, provide } from 'vue'
 import { useRouter } from 'vue-router'
+import SiteFooter from './components/SiteFooter.vue'
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
 const steamId = ref<string | null>(null)
@@ -86,12 +87,16 @@ provide('steamLoginUrl', steamLoginUrl)
         </Transition>
       </RouterView>
     </main>
+
+    <SiteFooter />
   </div>
 </template>
 
 <style scoped>
 .app-shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .top-header {
@@ -180,6 +185,8 @@ provide('steamLoginUrl', steamLoginUrl)
 }
 
 .page-content {
+  flex: 1;
+  width: 100%;
   max-width: 1220px;
   margin: 0 auto;
   padding: 24px 18px 40px;
