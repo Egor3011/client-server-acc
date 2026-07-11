@@ -2,6 +2,7 @@
 import { computed, onMounted, ref, provide } from 'vue'
 import { useRouter } from 'vue-router'
 import SiteFooter from './components/SiteFooter.vue'
+import SupportButton from './components/SupportButton.vue'
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
 const steamId = ref<string | null>(null)
@@ -89,6 +90,7 @@ provide('steamLoginUrl', steamLoginUrl)
     </main>
 
     <SiteFooter />
+    <SupportButton />
   </div>
 </template>
 
